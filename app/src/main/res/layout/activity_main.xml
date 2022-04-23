@@ -78,6 +78,7 @@
                 android:id="@+id/floatingActionButton8"
                 style="@style/menu_buttons"
                 android:clickable="true"
+                android:onClick="createAlertForVariables"
                 app:srcCompat="@drawable/ic_baseline_comment_24"
                 tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
@@ -85,6 +86,7 @@
                 android:id="@+id/floatingActionButton9"
                 style="@style/menu_buttons"
                 android:clickable="true"
+
                 app:srcCompat="@drawable/ic_baseline_comment_24"
                 tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
@@ -104,6 +106,7 @@
         </LinearLayout>
 
     </LinearLayout>
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
