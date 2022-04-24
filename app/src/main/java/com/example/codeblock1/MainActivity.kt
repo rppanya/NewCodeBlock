@@ -1,10 +1,14 @@
 package com.example.codeblock1
 
 import android.os.Bundle
+import android.view.MotionEvent
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Button
+import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -60,7 +64,16 @@ class MainActivity : AppCompatActivity() {
         val cancelButton = view.findViewById<Button>(R.id.dialogDelete_button)
         builder.setView(view)
         builder.setTitle("New variable")
+        val wrapContent = LinearLayout.LayoutParams.WRAP_CONTENT
+        val lParams: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
+            wrapContent, wrapContent
+        )
         enterButton.setOnClickListener {
+            val btnNew = Button(this)
+            val txt = view.findViewById<EditText>(R.id.editTextTextPersonName)
+            btnNew.text = txt.text.toString()
+            btnNew.id++
+            llMain.addView(btnNew, lParams)
             builder.dismiss()
         }
         cancelButton.setOnClickListener {
@@ -68,6 +81,7 @@ class MainActivity : AppCompatActivity() {
         }
         builder.setCancelable(false)
         builder.show()
+
     }
 }
 
