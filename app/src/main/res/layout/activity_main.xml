@@ -75,18 +75,16 @@
             android:orientation="vertical">
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/floatingActionButton8"
+                android:id="@+id/btnVariables"
                 style="@style/menu_buttons"
                 android:clickable="true"
-                android:onClick="createAlertForVariables"
                 app:srcCompat="@drawable/ic_baseline_comment_24"
                 tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/floatingActionButton9"
+                android:id="@+id/btnOperators"
                 style="@style/menu_buttons"
                 android:clickable="true"
-
                 app:srcCompat="@drawable/ic_baseline_comment_24"
                 tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
