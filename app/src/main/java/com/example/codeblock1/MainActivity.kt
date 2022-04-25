@@ -1,5 +1,6 @@
 package com.example.codeblock1
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
@@ -8,9 +9,9 @@ import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.marginBottom
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -21,6 +22,9 @@ class MainActivity : AppCompatActivity() {
     private val toBottom: Animation by lazy { AnimationUtils.loadAnimation(this, R.anim.to_bottom_anim) }
 
     private var clicked = false
+
+    private var counter = 0
+    private var variables = mutableListOf<Button>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +61,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     fun createAlertForVariables(view: View) {
         val builder = AlertDialog.Builder(this, R.style.CustomAlertDialog).create()
         val view = layoutInflater.inflate(R.layout.custom_view_layout, null)
@@ -72,9 +77,12 @@ class MainActivity : AppCompatActivity() {
             val btnNew = Button(this)
             val txt = view.findViewById<EditText>(R.id.editTextTextPersonName)
             btnNew.text = txt.text.toString()
-            btnNew.id++
             llMain.addView(btnNew, lParams)
             builder.dismiss()
+            variables.add(btnNew)
+            btnNew.setOnTouchListener(View.OnTouchListener{ view, motionEvent ->
+                onTouch(btnNew, motionEvent)
+            })
         }
         cancelButton.setOnClickListener {
             builder.cancel()
@@ -83,6 +91,25 @@ class MainActivity : AppCompatActivity() {
         builder.show()
 
     }
+
+    fun onTouch(view: Button, event: MotionEvent): Boolean {
+        var dX:Float = 0f
+        var dY:Float = 0f
+        when (event.action) {
+            MotionEvent.ACTION_DOWN -> {
+                dX = view.x - event.rawX
+                dY = view.y - event.rawY
+            }
+            MotionEvent.ACTION_MOVE -> view.animate()
+                .x(event.rawX + dX - 130)
+                .y(event.rawY + dY - 250)
+                .setDuration(0)
+                .start()
+            else -> return false
+        }
+        return true
+    }
 }
+
 
 
