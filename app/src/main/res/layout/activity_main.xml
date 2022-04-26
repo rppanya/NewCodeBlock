@@ -101,17 +101,31 @@
                 android:clickable="true"
                 app:srcCompat="@drawable/ic_baseline_comment_24"
                 tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="&lt;ScrollView&#xA;                android:layout_width=&quot;match_parent&quot;&#xA;                android:layout_height=&quot;wrap_content&quot;&#xA;                android:fillViewport=&quot;true&quot;&#xA;                android:padding=&quot;16dp&quot; scary>&#xA;&#xA;                &lt;LinearLayout&#xA;                    android:layout_width=&quot;match_parent&quot;&#xA;                    android:layout_height=&quot;wrap_content&quot;&#xA;                    android:orientation=&quot;vertical&quot; />&#xA;            &lt;/ScrollView>" />
+
         </LinearLayout>
 
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/llMain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/llMain"
-        android:orientation="vertical">
-    </LinearLayout>
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="382dp"
+        tools:layout_editor_absoluteY="434dp">
 
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,23 +4,23 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.Button
-import android.widget.EditText
-import android.widget.LinearLayout
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.codeblock1.R.style.CustomAlertDialog
 import kotlinx.android.synthetic.main.activity_main.*
+import android.widget.ScrollView
 
 
 class MainActivity : AppCompatActivity() {
 
     private var clicked = false
-
     private var counter = 0
     private var variables = mutableListOf<Button>()
+    //var container = findViewById<LinearLayout>(R.id.buttonsContainer)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,7 +72,6 @@ class MainActivity : AppCompatActivity() {
         val builder = AlertDialog.Builder(this, CustomAlertDialog).create()
 
         if (condition == "variables") {
-
             val view = layoutInflater.inflate(R.layout.custom_view_layout, null)
             builder.setTitle("New variable")
             builder.setView(view)
@@ -138,10 +137,17 @@ class MainActivity : AppCompatActivity() {
                 dY = view.y - event.rawY
             }
             MotionEvent.ACTION_MOVE -> view.animate()
-                .x(event.rawX + dX - 130)
-                .y(event.rawY + dY - 300)
+                .x(event.rawX + dX - 100)
+                .y((((event.rawY + dY - 100)/150).toInt() * 150).toFloat())
                 .setDuration(0)
                 .start()
+            MotionEvent.ACTION_UP -> {
+                view.animate()
+                    .x(25F)
+                    .y((((event.rawY + dY - 100)/150).toInt() * 150).toFloat())
+                    .setDuration(0)
+                    .start()
+            }
             else -> return false
         }
         return true
