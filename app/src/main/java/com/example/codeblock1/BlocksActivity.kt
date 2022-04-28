@@ -1,15 +1,17 @@
 package com.example.codeblock1
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.code_page.*
 
 
 class BlocksActivity : Activity() {
-    private var clicked = true
+    private var clicked = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.code_page)
@@ -23,26 +25,35 @@ class BlocksActivity : Activity() {
                 addButton.startAnimation(rotateOpen)
                 menu.visibility = View.VISIBLE
                 btnVariables.startAnimation(fromBottom)
-                floatingActionButton10.startAnimation(fromBottom)
+                btnIfElse.startAnimation(fromBottom)
+                btnOpenConsole.startAnimation(fromBottom)
 
                 textView2.startAnimation(fromBottom)
                 textView4.startAnimation(fromBottom)
+                textView5.startAnimation(fromBottom)
                 clicked = true
             } else {
                 addButton.startAnimation(rotateClose)
 
                 clicked = false
-                //важная строчка
                 btnVariables.startAnimation(toBottom)
-                floatingActionButton10.startAnimation(toBottom)
+                btnIfElse.startAnimation(toBottom)
+                btnOpenConsole.startAnimation(toBottom)
 
                 textView2.startAnimation(toBottom)
                 textView4.startAnimation(toBottom)
+                textView5.startAnimation(toBottom)
             }
         }
         btnVariables.setOnClickListener{
 
         }
 
+        btnOpenConsole.setOnClickListener{
+
+        }
+
     }
 }
+
+

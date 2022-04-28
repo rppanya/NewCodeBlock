@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">CODEBLOCKS</string>
     <string name="lt_scrollview_xa_android_layout_width_quot_match_parent_quot_xa_android_layout_height_quot_wrap_content_quot_xa_android_fillviewport_quot_true_quot_xa_android_padding_quot_16dp_quot_scary_xa_xa_lt_linearlayout_xa_android_layout_width_quot_match_parent_quot_xa_android_layout_height_quot_wrap_content_quot_xa_android_orientation_quot_vertical_quot_xa_lt_scrollview"><![CDATA[<ScrollView\n android:layout_width=\"match_parent\"\n android:layout_height=\"wrap_content\"\n android:fillViewport=\"true\"\n android:padding=\"16dp\" scary>\n\n <LinearLayout\n android:layout_width=\"match_parent\"\n android:layout_height=\"wrap_content\"\n android:orientation=\"vertical\" />\n </ScrollView>]]></string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
