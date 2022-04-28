@@ -4,15 +4,15 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
-import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.*
+import android.widget.Button
+import android.widget.EditText
+import android.widget.LinearLayout
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.codeblock1.R.style.CustomAlertDialog
 import kotlinx.android.synthetic.main.activity_main.*
-import android.widget.ScrollView
 
 
 class MainActivity : AppCompatActivity() {
@@ -156,6 +156,65 @@ class MainActivity : AppCompatActivity() {
 }
 
 
+class ReversePolishNotation(var dataString: String) {
 
+    private fun processOperator(st: ArrayList<Int>, op: Char) {
+        val r: Int = st.removeLast()
+        val l: Int = st.removeLast()
+        when (op) {
+            '+' -> st.add(l + r)
+            '-' -> st.add(l - r)
+            '*' -> st.add(l * r)
+            '/' -> st.add(l / r)
+            '%' -> st.add(l % r)
+        }
+    }
+    private fun isOperator(c: Char): Boolean { // возвращяем тру если один из символов ниже
+        return c == '+' || c == '-' || c == '*' || c == '/' || c == '%'
+    }
 
+    private fun priority(op: Char): Int {
+        return when (op) {
+            '+', '-' -> 1
+            '*', '/', '%' -> 2
+            else -> -1
+        }
+    }
+
+    private fun RPN(): Int {
+        val stackNumbers: ArrayList<Int> = ArrayList()
+        val stackOperators: ArrayList<Char> = ArrayList()
+        var i = 0
+        while (i < dataString.length) {
+            val current: Char = dataString[i]
+            when {
+                current == '(' -> stackOperators.add('(')
+                current == ')' -> {
+                    while (stackOperators.last() != '(') {
+                        processOperator(stackNumbers, stackOperators.removeLast())
+                    }
+                    stackOperators.removeLast()
+                }
+                isOperator(current) -> {
+                    while (stackOperators.isNotEmpty() && priority(stackOperators.last()) >= priority(current)) {
+                        processOperator(stackNumbers, stackOperators.removeLast())
+                    }
+                    stackOperators.add(current)
+                }
+                else -> {
+                    var operand = ""
+                    while (i < dataString.length && Character.isDigit(dataString[i])) {
+                        operand += dataString[i++]
+                    }
+                    --i
+                    stackNumbers.add(Integer.parseInt(operand))
+                }
+            }
+        }
+        while (stackOperators.isNotEmpty()) {
+            processOperator(stackNumbers, stackOperators.removeLast())
+        }
+        return stackNumbers[0]
+    }
+}
 
