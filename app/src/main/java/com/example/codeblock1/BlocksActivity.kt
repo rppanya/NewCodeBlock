@@ -32,6 +32,7 @@ class BlocksActivity : Activity() {
                 addButton.startAnimation(rotateClose)
 
                 clicked = false
+                //важная строчка
                 btnVariables.startAnimation(toBottom)
                 floatingActionButton10.startAnimation(toBottom)
 
