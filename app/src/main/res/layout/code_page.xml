@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BlocksActivity">
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="28dp"
+        android:backgroundTint="@color/purple_200"
+        android:clickable="true"
+        android:focusable="true"
+        android:tint="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_add"
+        tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
+
+    <LinearLayout
+        android:id="@+id/menu"
+        android:layout_width="159dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="12dp"
+        android:orientation="horizontal"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/addButton"
+        app:layout_constraintEnd_toEndOf="@+id/addButton">
+
+        <LinearLayout
+            android:layout_width="91dp"
+            android:layout_height="199dp"
+            android:layout_marginEnd="28dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView2"
+                style="@style/menu_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Variables" />
+
+            <TextView
+                android:id="@+id/textView4"
+                style="@style/menu_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="If else" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="40dp"
+            android:layout_height="197dp"
+            android:layout_marginEnd="4dp"
+            android:orientation="vertical">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btnVariables"
+                style="@style/menu_buttons"
+                android:clickable="true"
+                app:srcCompat="@drawable/ic_baseline_comment_24"
+                tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/floatingActionButton10"
+                style="@style/menu_buttons"
+                android:clickable="true"
+                app:srcCompat="@drawable/ic_baseline_comment_24"
+                tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llMain"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="382dp"
+        tools:layout_editor_absoluteY="434dp">
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
