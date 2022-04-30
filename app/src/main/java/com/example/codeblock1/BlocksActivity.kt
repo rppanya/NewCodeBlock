@@ -3,11 +3,16 @@ package com.example.codeblock1
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Xml
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.code_page.*
+import kotlinx.android.synthetic.main.variables_block.*
+import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.Toast
 
 
 class BlocksActivity : Activity() {
@@ -46,7 +51,8 @@ class BlocksActivity : Activity() {
             }
         }
         btnVariables.setOnClickListener{
-
+            val view = layoutInflater.inflate(R.layout.variables_block, null, false)
+            llMain.addView(view)
         }
 
         btnOpenConsole.setOnClickListener{
