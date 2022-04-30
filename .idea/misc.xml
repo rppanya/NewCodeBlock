@@ -3,18 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/NewCodeBlock/app/src/main/res/drawable/ic_baseline_comment_24.xml" value="0.175" />
-        <entry key="..\:/NewCodeBlock/app/src/main/res/drawable/ic_launcher_background.xml" value="0.175" />
-        <entry key="..\:/NewCodeBlock/app/src/main/res/drawable/menu_buttons.xml" value="0.175" />
-        <entry key="..\:/NewCodeBlock/app/src/main/res/layout/activity_main.xml" value="0.22826086956521738" />
-        <entry key="..\:/NewCodeBlock/app/src/main/res/layout/alert_for_operators.xml" value="0.25" />
-        <entry key="..\:/NewCodeBlock/app/src/main/res/layout/code_page.xml" value="0.25" />
-        <entry key="..\:/NewCodeBlock/app/src/main/res/layout/console_page.xml" value="0.22826086956521738" />
-        <entry key="..\:/NewCodeBlock/app/src/main/res/layout/custom_view_layout.xml" value="0.22826086956521738" />
-        <entry key="..\:/NewCodeBlock/app/src/main/res/layout/variable_block.xml" value="0.264" />
-        <entry key="..\:/NewCodeBlock/app/src/main/res/layout/variables_block.xml" value="0.264" />
         <entry key="..\:/Users/Admin/forProgramm/CodeBlock1/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/Admin/forProgramm/CodeBlock1/app/src/main/res/layout/code_page.xml" value="0.25" />
+        <entry key="..\:/Users/Admin/forProgramm/NewCodeBlock/app/src/main/res/drawable/rounded_corner.xml" value="0.2555" />
+        <entry key="..\:/Users/Admin/forProgramm/NewCodeBlock/app/src/main/res/layout/activity_console.xml" value="0.2" />
+        <entry key="..\:/Users/Admin/forProgramm/NewCodeBlock/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/Users/Admin/forProgramm/NewCodeBlock/app/src/main/res/layout/alert_for_operators.xml" value="0.23731884057971014" />
+        <entry key="..\:/Users/Admin/forProgramm/NewCodeBlock/app/src/main/res/layout/code_page.xml" value="0.264" />
+        <entry key="..\:/Users/Admin/forProgramm/NewCodeBlock/app/src/main/res/layout/console_page.xml" value="0.25" />
+        <entry key="..\:/Users/Admin/forProgramm/NewCodeBlock/app/src/main/res/layout/custom_view_layout.xml" value="0.23731884057971014" />
+        <entry key="..\:/Users/Admin/forProgramm/NewCodeBlock/app/src/main/res/layout/fragment_console.xml" value="0.25" />
         <entry key="..\:/prog/CodeBlock/app/src/main/res/layout/activity_main.xml" value="0.15087719298245614" />
       </map>
     </option>
