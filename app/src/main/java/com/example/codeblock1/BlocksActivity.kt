@@ -1,5 +1,6 @@
 package com.example.codeblock1
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -17,6 +18,7 @@ import android.widget.Toast
 
 class BlocksActivity : Activity() {
     private var clicked = false
+    @SuppressLint("InflateParams")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.code_page)
@@ -53,6 +55,7 @@ class BlocksActivity : Activity() {
         btnVariables.setOnClickListener{
             val view = layoutInflater.inflate(R.layout.variables_block, null, false)
             llMain.addView(view)
+
         }
 
         btnOpenConsole.setOnClickListener{
