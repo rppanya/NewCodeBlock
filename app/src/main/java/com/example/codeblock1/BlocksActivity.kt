@@ -2,22 +2,21 @@ package com.example.codeblock1
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
-import android.util.Xml
+import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.Button
-import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.code_page.*
-import kotlinx.android.synthetic.main.variables_block.*
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.Toast
+import android.view.animation.LinearInterpolator
+import android.view.animation.TranslateAnimation
+import androidx.core.view.marginBottom
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.codeblock1.databinding.CodePageBinding
+import kotlinx.android.synthetic.main.code_page.*
+import kotlinx.android.synthetic.main.console_page.view.*
+import kotlinx.android.synthetic.main.variables_block.*
+
 
 private fun onTouch(view: View, event: MotionEvent): Boolean {
     var dX:Float = 0f
@@ -92,6 +91,7 @@ class BlocksActivity : Activity() {
 
     }
 
+    @SuppressLint("InflateParams")
     private fun init() {
             binding.apply{
                 rcView.layoutManager = LinearLayoutManager(this@BlocksActivity)
@@ -103,8 +103,10 @@ class BlocksActivity : Activity() {
         }
 
         testButton.setOnClickListener{
-            val test = VarBlockAdapter()
-            test.swap(0, 1)
+            val view = LayoutInflater.from(this).inflate(R.layout.console_page, null)
+            layout_console.addView(view)
+            /* val test = ReversePolishNotation("(2+9*8")
+            testButton.text = test.RPN()*/
         }
     }
 }

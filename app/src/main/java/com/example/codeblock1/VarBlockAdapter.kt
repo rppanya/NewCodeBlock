@@ -29,7 +29,7 @@ class VarBlockAdapter : RecyclerView.Adapter<VarBlockAdapter.VarBlocksHolder>() 
         return varBlocksList.size
     }
 
-    open fun swap(firstPosition: Int, secondPosition: Int){
+    fun swap(firstPosition: Int, secondPosition: Int){
         val x = varBlocksList[firstPosition]
         varBlocksList[firstPosition] = varBlocksList[secondPosition]
         varBlocksList[secondPosition] = x
