@@ -3,18 +3,29 @@ package com.example.codeblock1
 import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.marginLeft
 import androidx.core.view.marginStart
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.ItemTouchHelper.*
 import androidx.recyclerview.widget.RecyclerView
+import com.example.codeblock1.databinding.CodePageBinding
 import com.example.codeblock1.databinding.ConsolePageBinding
 import com.example.codeblock1.databinding.VariablesBlockBinding
+import com.google.android.material.snackbar.BaseTransientBottomBar
+import java.util.*
+import kotlin.collections.ArrayList
 
-class VarBlockAdapter : RecyclerView.Adapter<VarBlockAdapter.VarBlocksHolder>() {
-    open val varBlocksList = ArrayList<VarBlock>()
+class VarBlockAdapter : RecyclerView.Adapter<VarBlockAdapter.VarBlocksHolder>() { //private val testVal: test в конструктор
+
+    private val varBlocksList = ArrayList<VarBlock>()
+
     class VarBlocksHolder(item: View):RecyclerView.ViewHolder(item){
-        val binding = VariablesBlockBinding.bind(item)
+        private val binding = VariablesBlockBinding.bind(item)
         fun bind(block: VarBlock) = with(binding){
             when(block.blockType) {
                 "PRINT" -> {
@@ -32,6 +43,7 @@ class VarBlockAdapter : RecyclerView.Adapter<VarBlockAdapter.VarBlocksHolder>() 
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VarBlocksHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.variables_block, parent, false)
         return VarBlocksHolder(view)
@@ -45,12 +57,9 @@ class VarBlockAdapter : RecyclerView.Adapter<VarBlockAdapter.VarBlocksHolder>() 
         return varBlocksList.size
     }
 
-    fun swap(firstPosition: Int, secondPosition: Int){
-        val x = varBlocksList[firstPosition]
-        varBlocksList[firstPosition] = varBlocksList[secondPosition]
-        varBlocksList[secondPosition] = x
-        notifyItemMoved(firstPosition, secondPosition);
-    }
+    //testVal.func() - так!!
+
+
 
     @SuppressLint("NotifyDataSetChanged")
     fun addVarBlock(block: VarBlock){
@@ -61,4 +70,27 @@ class VarBlockAdapter : RecyclerView.Adapter<VarBlockAdapter.VarBlocksHolder>() 
     fun callVarBlocksList(): ArrayList<VarBlock>{
         return varBlocksList
     }
+    /*interface test{
+        fun func() {}
+ //в блоксактивити нужно оверрайднуть
+    }*/
+    var simpleCellback = object : ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP.or(ItemTouchHelper.DOWN),0) {
+        override fun onMove(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            target: RecyclerView.ViewHolder
+        ): Boolean {
+            var startPosition = viewHolder.adapterPosition
+            var endPosition = target.adapterPosition
+
+            Collections.swap(varBlocksList, startPosition, endPosition)
+            recyclerView.adapter?.notifyItemMoved(startPosition, endPosition)
+            return true
+        }
+
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+        }
+
+    }
+
 }

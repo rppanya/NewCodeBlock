@@ -11,7 +11,9 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.codeblock1.databinding.CodePageBinding
 import com.example.codeblock1.databinding.ConsolePageBinding
 import com.example.codeblock1.databinding.VariablesBlockBinding
@@ -20,34 +22,6 @@ import kotlinx.android.synthetic.main.code_page.*
 
 private var canCallConsole = true
 
-private fun onTouch(view: View, event: MotionEvent): Boolean {
-    var dX:Float = 0f
-    var dY:Float = 0f
-    when (event.action) {
-        MotionEvent.ACTION_DOWN -> {
-            dX = view.x - event.rawX
-            dY = view.y - event.rawY
-        }
-        MotionEvent.ACTION_MOVE -> view.animate()
-            .x(event.rawX)
-            .y(event.rawY)
-            .setDuration(0)
-            .start()
-        MotionEvent.ACTION_UP -> {
-            view.animate()
-                .x(event.rawX)
-                .y(event.rawY)
-                .setDuration(0)
-                .start()
-        }
-        else -> return false
-    }
-    return true
-}
-
-private fun setValuesToBlocks(){
-
-}
 
 private fun debug(varBlocksList: ArrayList<VarBlock>, console: ConsolePageBinding){
     varBlocksList.forEach{
@@ -62,17 +36,25 @@ class BlocksActivity : Activity() {
     private var clicked = false
     lateinit var binding: CodePageBinding
     private val adapter = VarBlockAdapter()
+    /*interface consoleInterface{
+        fun consoleClose(){
+
+        }
+    }*/
 
     @SuppressLint("InflateParams", "ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = CodePageBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
         val blockView = LayoutInflater.from(this).inflate(R.layout.variables_block, null)
         val layoutBlock = VariablesBlockBinding.bind(blockView)
 
         layoutBlock.nameOfVariable.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            @SuppressLint("SetTextI18n")
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 layoutBlock.nameOfVariable.setText(layoutBlock.nameOfVariable.text.toString() + s.toString())
             }
@@ -81,6 +63,7 @@ class BlocksActivity : Activity() {
         })
 
         init(layoutBlock)
+
 
         addButton.setOnClickListener{
             val rotateOpen: Animation by lazy { AnimationUtils.loadAnimation(this, R.anim.rotate_open_anim) }
@@ -136,12 +119,13 @@ class BlocksActivity : Activity() {
         }
     }
 
-
     @SuppressLint("InflateParams")
     private fun init(layoutBlock: VariablesBlockBinding) {
             binding.apply{
                 rcView.layoutManager = LinearLayoutManager(this@BlocksActivity)
                 rcView.adapter = adapter
+                val itemTouchHelper = ItemTouchHelper(adapter.simpleCellback)
+                itemTouchHelper.attachToRecyclerView(rcView)
 
                 btnVariables.setOnClickListener{
                     val block = VarBlock("NAME", "VALUE", "VAR", layoutBlock)
@@ -159,6 +143,9 @@ class BlocksActivity : Activity() {
                 }
         }
     }
+
+
+
 }
 
 
