@@ -12,7 +12,9 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="-143dp"
+        tools:layout_editor_absoluteY="-16dp">
 
         <ImageView
             android:id="@+id/menuButtonTop"
@@ -23,16 +25,22 @@
             android:src="@drawable/ic_baseline_menu_24" />
 
         <Button
-            android:id="@+id/testButton"
+            android:id="@+id/consoleButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="317dp"
             android:layout_marginRight="317dp"
-            android:text="Button"
+            android:text="CONSOLE"
             app:layout_constraintBottom_toTopOf="@+id/rcView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/menuButtonTop" />
+
+        <Button
+            android:id="@+id/btnDebug"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DEBUG" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcView"
@@ -99,7 +107,7 @@
                 style="@style/menu_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Open console" />
+                android:text="Print" />
 
 
         </LinearLayout>
@@ -126,7 +134,7 @@
                 tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/btnOpenConsole"
+                android:id="@+id/btnPrint"
                 style="@style/menu_buttons"
                 android:clickable="true"
                 app:srcCompat="@drawable/ic_baseline_comment_24"

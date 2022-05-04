@@ -9,15 +9,17 @@
         <entry key="..\:/Users/Admin/forProgramm/NewCodeBlock/app/src/main/res/layout/activity_console.xml" value="0.2" />
         <entry key="..\:/Users/Admin/forProgramm/NewCodeBlock/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/Admin/forProgramm/NewCodeBlock/app/src/main/res/layout/alert_for_operators.xml" value="0.23731884057971014" />
-        <entry key="..\:/Users/Admin/forProgramm/NewCodeBlock/app/src/main/res/layout/code_page.xml" value="0.2" />
-        <entry key="..\:/Users/Admin/forProgramm/NewCodeBlock/app/src/main/res/layout/console_page.xml" value="0.1" />
+        <entry key="..\:/Users/Admin/forProgramm/NewCodeBlock/app/src/main/res/layout/code_page.xml" value="0.1" />
+        <entry key="..\:/Users/Admin/forProgramm/NewCodeBlock/app/src/main/res/layout/console_page.xml" value="0.25" />
         <entry key="..\:/Users/Admin/forProgramm/NewCodeBlock/app/src/main/res/layout/custom_view_layout.xml" value="0.23731884057971014" />
         <entry key="..\:/Users/Admin/forProgramm/NewCodeBlock/app/src/main/res/layout/fragment_console.xml" value="0.25" />
         <entry key="..\:/Users/Admin/forProgramm/NewCodeBlock/app/src/main/res/layout/variables_block.xml" value="0.1" />
         <entry key="..\:/prog/CodeBlock/app/src/main/res/layout/activity_main.xml" value="0.15087719298245614" />
         <entry key="..\:/prog/NewCodeBlock/app/src/main/res/layout/code_page.xml" value="0.24074074074074073" />
+        <entry key="..\:/prog/NewCodeBlock/app/src/main/res/layout/console_page.xml" value="0.19444444444444445" />
+        <entry key="..\:/prog/NewCodeBlock/app/src/main/res/layout/print_page.xml" value="0.25416666666666665" />
         <entry key="..\:/prog/NewCodeBlock/app/src/main/res/layout/var_block.xml" value="0.25416666666666665" />
-        <entry key="..\:/prog/NewCodeBlock/app/src/main/res/layout/variables_block.xml" value="0.24074074074074073" />
+        <entry key="..\:/prog/NewCodeBlock/app/src/main/res/layout/variables_block.xml" value="0.264" />
       </map>
     </option>
   </component>

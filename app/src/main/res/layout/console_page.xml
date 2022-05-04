@@ -15,7 +15,7 @@
         android:background="@drawable/rounded_corner">
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/consoleName"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:paddingHorizontal="30dp"
@@ -24,20 +24,14 @@
             android:text="Console" />
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/consoleOutput"
             android:layout_width="match_parent"
+            android:layout_height="197dp"
             android:layout_margin="20dp"
-            android:layout_height="150dp"
             android:background="@color/white"
             android:padding="10sp"
-            android:textSize="17sp"
-            android:text="Output" />
+            android:text="Output"
+            android:textSize="17sp" />
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:text="Close" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
