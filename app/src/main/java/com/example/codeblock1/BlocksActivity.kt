@@ -109,19 +109,15 @@ class BlocksActivity : Activity() {
                 adapter.addVarBlock(block)
             }
 
-            /*btnPrint.setOnClickListener{
-                val blockView = LayoutInflater.from(context).inflate(R.layout.print_block, null)
-                val layoutBlock = PrintBlockBinding.bind(blockView)
-                val block = VarBlock("NAME", "VALUE", "PRINT", layoutBlock)
+            btnPrint.setOnClickListener{
+                val block = VarBlock("NAME", "VALUE", "PRINT")
                 adapter.addVarBlock(block)
             }
 
             btnIfElse.setOnClickListener{
-                val blockView = LayoutInflater.from(context).inflate(R.layout.if_block, null)
-                val layoutBlock = IfBlockBinding.bind(blockView)
-                val block = VarBlock("NAME", "VALUE", "IF", layoutBlock)
+                val block = VarBlock("NAME", "VALUE", "IF")
                 adapter.addVarBlock(block)
-            }*/
+            }
         }
     }
 }

@@ -1,28 +1,15 @@
 package com.example.codeblock1
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.core.view.marginLeft
-import androidx.core.view.marginStart
-import androidx.recyclerview.widget.AsyncListDiffer
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.ItemTouchHelper.*
 import androidx.recyclerview.widget.RecyclerView
-import com.example.codeblock1.databinding.CodePageBinding
-import com.example.codeblock1.databinding.ConsolePageBinding
-import com.example.codeblock1.databinding.VariablesBlockBinding
-import com.google.android.material.snackbar.BaseTransientBottomBar
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -47,6 +34,7 @@ class VarBlockAdapter : RecyclerView.Adapter<VarBlockAdapter.VarBlocksHolder>() 
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VarBlocksHolder {
+
         val view = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
         return VarBlocksHolder(view)
     }
@@ -114,5 +102,4 @@ class VarBlockAdapter : RecyclerView.Adapter<VarBlockAdapter.VarBlocksHolder>() 
         }
 
     }
-
 }
