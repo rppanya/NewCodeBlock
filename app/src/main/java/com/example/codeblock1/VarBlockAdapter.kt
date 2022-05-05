@@ -2,10 +2,14 @@ package com.example.codeblock1
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.view.marginLeft
@@ -28,6 +32,8 @@ class VarBlockAdapter : RecyclerView.Adapter<VarBlockAdapter.VarBlocksHolder>() 
 
     class VarBlocksHolder(item: View):RecyclerView.ViewHolder(item){
         val blockType : TextView = item.findViewById(R.id.nameOfBlock)
+        val value : EditText = item.findViewById(R.id.valueOfVariable)
+        val name : EditText = item.findViewById(R.id.nameOfVariable)
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -38,24 +44,6 @@ class VarBlockAdapter : RecyclerView.Adapter<VarBlockAdapter.VarBlocksHolder>() 
         }
         return viewType;
     }
-//    class VarBlocksHolder(item: View):RecyclerView.ViewHolder(item){
-//        private val binding = VariablesBlockBinding.bind(item)
-//        fun bind(block: VarBlock) = with(binding){
-//            when(block.blockType) {
-//                "PRINT" -> {
-//                    valueOfVariable.visibility = View.GONE
-//                    nameOfBlock.text = block.blockType
-//                    blockForVariable.setBackgroundResource(R.color.printBlockColor)
-//                }
-//                "IF" -> {
-//                    nameOfBlock.text = block.blockType
-//                    valueOfVariable.visibility = View.GONE
-//                    nameOfVariable.hint = "CONDITION"
-//                    blockForVariable.setBackgroundResource(R.color.ifBlockColor)
-//                }
-//            }
-//        }
-//    }
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VarBlocksHolder {
@@ -65,6 +53,24 @@ class VarBlockAdapter : RecyclerView.Adapter<VarBlockAdapter.VarBlocksHolder>() 
 
     override fun onBindViewHolder(holder: VarBlocksHolder, position: Int) {
 //        holder.bind(varBlocksList[position])
+        holder.name.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            @SuppressLint("SetTextI18n")
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+               varBlocksList[varBlocksList.lastIndex].name = s.toString()
+            }
+
+            override fun afterTextChanged(s: Editable) {}
+        })
+        holder.value.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            @SuppressLint("SetTextI18n")
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                varBlocksList[varBlocksList.lastIndex].value = s.toString()
+            }
+
+            override fun afterTextChanged(s: Editable) {}
+        })
         holder.blockType.text = varBlocksList[position].blockType
     }
 
@@ -85,6 +91,7 @@ class VarBlockAdapter : RecyclerView.Adapter<VarBlockAdapter.VarBlocksHolder>() 
     fun callVarBlocksList(): ArrayList<VarBlock>{
         return varBlocksList
     }
+
     /*interface test{
         fun func() {}
  //в блоксактивити нужно оверрайднуть

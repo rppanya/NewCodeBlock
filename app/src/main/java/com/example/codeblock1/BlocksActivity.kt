@@ -2,6 +2,7 @@ package com.example.codeblock1
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -14,21 +15,17 @@ import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.codeblock1.databinding.CodePageBinding
-import com.example.codeblock1.databinding.ConsolePageBinding
-import com.example.codeblock1.databinding.VariablesBlockBinding
+import com.example.codeblock1.databinding.*
 import kotlinx.android.synthetic.main.code_page.*
 
 
 private var canCallConsole = true
 
 
+@SuppressLint("SetTextI18n")
 private fun debug(varBlocksList: ArrayList<VarBlock>, console: ConsolePageBinding){
-    varBlocksList.forEach{
-        if(it.blockType == "PRINT"){
-            Log.d("arrr", it.layoutBlock.nameOfVariable.text.toString())
-            console.consoleOutput.text = it.layoutBlock.nameOfVariable.text.toString()
-        }
+    for(i in 0 until varBlocksList.size){
+        console.consoleOutput.text = varBlocksList[i].name
     }
 }
 
@@ -36,11 +33,6 @@ class BlocksActivity : Activity() {
     private var clicked = false
     lateinit var binding: CodePageBinding
     private val adapter = VarBlockAdapter()
-    /*interface consoleInterface{
-        fun consoleClose(){
-
-        }
-    }*/
 
     @SuppressLint("InflateParams", "ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,22 +40,7 @@ class BlocksActivity : Activity() {
         binding = CodePageBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-        val blockView = LayoutInflater.from(this).inflate(R.layout.variables_block, null)
-        val layoutBlock = VariablesBlockBinding.bind(blockView)
-
-        layoutBlock.nameOfVariable.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-            @SuppressLint("SetTextI18n")
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                layoutBlock.nameOfVariable.setText(layoutBlock.nameOfVariable.text.toString() + s.toString())
-            }
-
-            override fun afterTextChanged(s: Editable) {}
-        })
-
-        init(layoutBlock)
-
+        init(this)
 
         addButton.setOnClickListener{
             val rotateOpen: Animation by lazy { AnimationUtils.loadAnimation(this, R.anim.rotate_open_anim) }
@@ -113,39 +90,40 @@ class BlocksActivity : Activity() {
             }
             else {
                 layout_console.removeAllViews()
-                consoleButton.text = "CHLEN"
                 canCallConsole = true
             }
         }
     }
 
-    @SuppressLint("InflateParams")
-    private fun init(layoutBlock: VariablesBlockBinding) {
-            binding.apply{
-                rcView.layoutManager = LinearLayoutManager(this@BlocksActivity)
-                rcView.adapter = adapter
-                val itemTouchHelper = ItemTouchHelper(adapter.simpleCellback)
-                itemTouchHelper.attachToRecyclerView(rcView)
+    private fun init(context: Context) {
+        binding.apply{
+            rcView.layoutManager = LinearLayoutManager(this@BlocksActivity)
+            rcView.adapter = adapter
+            val itemTouchHelper = ItemTouchHelper(adapter.simpleCellback)
+            itemTouchHelper.attachToRecyclerView(rcView)
 
-                btnVariables.setOnClickListener{
-                    val block = VarBlock("NAME", "VALUE", "VAR", layoutBlock)
-                    adapter.addVarBlock(block)
-                }
+            btnVariables.setOnClickListener{
+                /*val blockView = LayoutInflater.from(context).inflate(R.layout.variables_block, null)
+                val layoutBlock = VariablesBlockBinding.bind(blockView)*/
+                val block = VarBlock("NAME", "VALUE", "VAR")
+                adapter.addVarBlock(block)
+            }
 
-                btnPrint.setOnClickListener{
-                    val block = VarBlock("NAME", "VALUE", "PRINT", layoutBlock)
-                    adapter.addVarBlock(block)
-                }
+            /*btnPrint.setOnClickListener{
+                val blockView = LayoutInflater.from(context).inflate(R.layout.print_block, null)
+                val layoutBlock = PrintBlockBinding.bind(blockView)
+                val block = VarBlock("NAME", "VALUE", "PRINT", layoutBlock)
+                adapter.addVarBlock(block)
+            }
 
-                btnIfElse.setOnClickListener{
-                    val block = VarBlock("NAME", "VALUE", "IF", layoutBlock)
-                    adapter.addVarBlock(block)
-                }
+            btnIfElse.setOnClickListener{
+                val blockView = LayoutInflater.from(context).inflate(R.layout.if_block, null)
+                val layoutBlock = IfBlockBinding.bind(blockView)
+                val block = VarBlock("NAME", "VALUE", "IF", layoutBlock)
+                adapter.addVarBlock(block)
+            }*/
         }
     }
-
-
-
 }
 
 
