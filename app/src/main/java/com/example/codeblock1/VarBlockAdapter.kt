@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.core.view.marginLeft
 import androidx.core.view.marginStart
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -25,32 +27,45 @@ class VarBlockAdapter : RecyclerView.Adapter<VarBlockAdapter.VarBlocksHolder>() 
     private val varBlocksList = ArrayList<VarBlock>()
 
     class VarBlocksHolder(item: View):RecyclerView.ViewHolder(item){
-        private val binding = VariablesBlockBinding.bind(item)
-        fun bind(block: VarBlock) = with(binding){
-            when(block.blockType) {
-                "PRINT" -> {
-                    valueOfVariable.visibility = View.GONE
-                    nameOfBlock.text = block.blockType
-                    blockForVariable.setBackgroundResource(R.color.printBlockColor)
-                }
-                "IF" -> {
-                    nameOfBlock.text = block.blockType
-                    valueOfVariable.visibility = View.GONE
-                    nameOfVariable.hint = "CONDITION"
-                    blockForVariable.setBackgroundResource(R.color.ifBlockColor)
-                }
-            }
-        }
+        val blockType : TextView = item.findViewById(R.id.nameOfBlock)
     }
 
-    @SuppressLint("ClickableViewAccessibility")
+    override fun getItemViewType(position: Int): Int {
+        val viewType = when(varBlocksList[position].blockType){
+            "PRINT" -> R.layout.print_block
+            "IF" -> R.layout.if_block
+            else -> R.layout.variables_block
+        }
+        return viewType;
+    }
+//    class VarBlocksHolder(item: View):RecyclerView.ViewHolder(item){
+//        private val binding = VariablesBlockBinding.bind(item)
+//        fun bind(block: VarBlock) = with(binding){
+//            when(block.blockType) {
+//                "PRINT" -> {
+//                    valueOfVariable.visibility = View.GONE
+//                    nameOfBlock.text = block.blockType
+//                    blockForVariable.setBackgroundResource(R.color.printBlockColor)
+//                }
+//                "IF" -> {
+//                    nameOfBlock.text = block.blockType
+//                    valueOfVariable.visibility = View.GONE
+//                    nameOfVariable.hint = "CONDITION"
+//                    blockForVariable.setBackgroundResource(R.color.ifBlockColor)
+//                }
+//            }
+//        }
+//    }
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VarBlocksHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.variables_block, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
         return VarBlocksHolder(view)
     }
 
     override fun onBindViewHolder(holder: VarBlocksHolder, position: Int) {
-        holder.bind(varBlocksList[position])
+//        holder.bind(varBlocksList[position])
+        holder.blockType.text = varBlocksList[position].blockType
     }
 
     override fun getItemCount(): Int {

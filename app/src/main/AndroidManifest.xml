@@ -11,6 +11,7 @@
         android:theme="@style/Theme.CodeBlock1" >
         <activity
             android:name=".MainActivity"
+            android:theme="@style/Theme.CodeBlock2"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

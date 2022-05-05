@@ -18,6 +18,17 @@
         <entry key="..\:/prog/NewCodeBlock/app/src/main/res/layout/code_page.xml" value="0.24074074074074073" />
         <entry key="..\:/prog/NewCodeBlock/app/src/main/res/layout/var_block.xml" value="0.25416666666666665" />
         <entry key="..\:/prog/NewCodeBlock/app/src/main/res/layout/variables_block.xml" value="0.24074074074074073" />
+        <entry key="..\:/projects/NewCodeBlock/app/src/main/res/drawable/ic_add.xml" value="0.141" />
+        <entry key="..\:/projects/NewCodeBlock/app/src/main/res/drawable/ic_baseline_comment_24.xml" value="0.141" />
+        <entry key="..\:/projects/NewCodeBlock/app/src/main/res/drawable/ic_baseline_redo_24.xml" value="0.141" />
+        <entry key="..\:/projects/NewCodeBlock/app/src/main/res/drawable/ic_baseline_turned_in_not_24.xml" value="0.141" />
+        <entry key="..\:/projects/NewCodeBlock/app/src/main/res/drawable/rounded_buttons.xml" value="0.1" />
+        <entry key="..\:/projects/NewCodeBlock/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/projects/NewCodeBlock/app/src/main/res/layout/code_page.xml" value="0.4" />
+        <entry key="..\:/projects/NewCodeBlock/app/src/main/res/layout/console_page.xml" value="0.25" />
+        <entry key="..\:/projects/NewCodeBlock/app/src/main/res/layout/if_block.xml" value="0.4" />
+        <entry key="..\:/projects/NewCodeBlock/app/src/main/res/layout/print_block.xml" value="0.4" />
+        <entry key="..\:/projects/NewCodeBlock/app/src/main/res/layout/variables_block.xml" value="0.25" />
       </map>
     </option>
   </component>
