@@ -30,7 +30,7 @@
             android:layout_margin="20dp"
             android:background="@color/white"
             android:padding="10sp"
-            android:text="Output"
+            android:hint="Output"
             android:textSize="17sp" />
 
     </LinearLayout>

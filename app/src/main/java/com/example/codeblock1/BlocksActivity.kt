@@ -24,8 +24,10 @@ private var canCallConsole = true
 
 @SuppressLint("SetTextI18n")
 private fun debug(varBlocksList: ArrayList<VarBlock>, console: ConsolePageBinding){
-    for(i in 0 until varBlocksList.size){
-        console.consoleOutput.text = varBlocksList[i].name
+    varBlocksList.forEach {
+        if(it.blockType == "PRINT"){
+
+        }
     }
 }
 

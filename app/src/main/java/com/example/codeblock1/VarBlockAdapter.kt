@@ -3,6 +3,7 @@ package com.example.codeblock1
 import android.annotation.SuppressLint
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,22 +40,23 @@ class VarBlockAdapter : RecyclerView.Adapter<VarBlockAdapter.VarBlocksHolder>() 
         return VarBlocksHolder(view)
     }
 
-    override fun onBindViewHolder(holder: VarBlocksHolder, position: Int) {
+    override fun onBindViewHolder(holder: VarBlocksHolder, @SuppressLint("RecyclerView") position: Int) {
 //        holder.bind(varBlocksList[position])
         holder.name.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             @SuppressLint("SetTextI18n")
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-               varBlocksList[varBlocksList.lastIndex].name = s.toString()
+               varBlocksList[position].name = s.toString()
             }
 
             override fun afterTextChanged(s: Editable) {}
         })
+
         holder.value.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             @SuppressLint("SetTextI18n")
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                varBlocksList[varBlocksList.lastIndex].value = s.toString()
+                varBlocksList[position].value = s.toString()
             }
 
             override fun afterTextChanged(s: Editable) {}
