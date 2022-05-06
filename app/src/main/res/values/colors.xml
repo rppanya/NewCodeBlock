@@ -12,4 +12,6 @@
     <color name="printBlockColor">#9DDCEE</color>
     <color name="blockTypeColor">#CCCCCC</color>
     <color name="ifBlockColor">#EFD2A7</color>
+    <color name="red">#FF6F6F</color>
+
 </resources>

@@ -3,21 +3,23 @@ package com.example.codeblock1
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.codeblock1.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.activity_main.*
 
-//main
 class MainActivity : AppCompatActivity() {
+    lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-
-        begin_button.setOnClickListener {
+        binding.btnBegin.setOnClickListener {
             val current = Intent(this@MainActivity, BlocksActivity::class.java)
             startActivity(current)
         }
-        exit_button.setOnClickListener {
+        binding.btnExit.setOnClickListener {
             finishAffinity()
         }
     }

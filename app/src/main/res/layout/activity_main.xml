@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="285dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/begin_button"
+        app:layout_constraintBottom_toTopOf="@+id/btnBegin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,20 +21,20 @@
         app:srcCompat="@drawable/android" />
 
     <Button
-        android:id="@+id/begin_button"
+        android:id="@+id/btnBegin"
         android:layout_width="280dp"
         android:layout_height="50dp"
         android:layout_marginBottom="28dp"
         android:background="@drawable/rounded_buttons"
         android:text="Begin"
         style="@style/custom_buttons"
-        app:layout_constraintBottom_toTopOf="@+id/exit_button"
+        app:layout_constraintBottom_toTopOf="@+id/btnExit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/exit_button"
+        android:id="@+id/btnExit"
         android:layout_width="280dp"
         android:layout_height="50dp"
         android:layout_marginBottom="172dp"
