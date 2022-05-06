@@ -22,14 +22,41 @@ import kotlinx.android.synthetic.main.code_page.*
 private var canCallConsole = true
 
 
+private fun convertVarToNum(varName: String, varBlocksList: ArrayList<VarBlock>): String{
+    varBlocksList.forEach {
+        if(it.name == varName){
+            return it.value
+        }
+    }
+    return "0"
+}
+
+private fun isVariableInString(s: String): Boolean {
+    val pattern = Regex(pattern = """[^\d]""")
+    return pattern.containsMatchIn(s)
+}
+
 @SuppressLint("SetTextI18n")
 private fun debug(varBlocksList: ArrayList<VarBlock>, console: ConsolePageBinding){
-    varBlocksList.forEach {
-        if(it.blockType == "PRINT"){
-
+    varBlocksList.forEach { block ->
+        if(block.blockType == "PRINT"){
+            var nameCopy: String = block.name
+            if(isVariableInString(block.name)){
+                var pattern: Sequence<MatchResult> = Regex("""([a-z]|[A-Z])[\w\d_]*""".trimIndent()).findAll(input = block.name)
+                pattern = pattern.sortedBy { -it.value.length }
+                pattern.forEach {
+                    val number = convertVarToNum(it.value, varBlocksList)
+                    nameCopy = nameCopy.replace(it.value, number)
+                }
+            }
+            Log.d("arrr", block.name)
+            Log.d("arrr", nameCopy)
+            val exception = ReversePolishNotation(nameCopy)
+            console.consoleOutput.text = exception.RPN()
         }
     }
 }
+
 
 class BlocksActivity : Activity() {
     private var clicked = false
