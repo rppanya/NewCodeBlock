@@ -16,7 +16,7 @@ import kotlin.collections.ArrayList
 
 class VarBlockAdapter : RecyclerView.Adapter<VarBlockAdapter.VarBlocksHolder>() { //private val testVal: test в конструктор
 
-    private val varBlocksList = ArrayList<VarBlock>()
+    val varBlocksList = ArrayList<VarBlock>()
 
     class VarBlocksHolder(item: View):RecyclerView.ViewHolder(item){
         val blockType : TextView = item.findViewById(R.id.nameOfBlock)
@@ -33,9 +33,7 @@ class VarBlockAdapter : RecyclerView.Adapter<VarBlockAdapter.VarBlocksHolder>() 
         return viewType;
     }
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VarBlocksHolder {
-
         val view = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
         return VarBlocksHolder(view)
     }
@@ -70,7 +68,10 @@ class VarBlockAdapter : RecyclerView.Adapter<VarBlockAdapter.VarBlocksHolder>() 
 
     //testVal.func() - так!!
 
-
+    fun removeAt(position: Int) {
+        varBlocksList.removeAt(position)
+        notifyItemRemoved(position)
+    }
 
     @SuppressLint("NotifyDataSetChanged")
     fun addVarBlock(block: VarBlock){
@@ -92,13 +93,14 @@ class VarBlockAdapter : RecyclerView.Adapter<VarBlockAdapter.VarBlocksHolder>() 
             viewHolder: RecyclerView.ViewHolder,
             target: RecyclerView.ViewHolder
         ): Boolean {
-            var startPosition = viewHolder.adapterPosition
-            var endPosition = target.adapterPosition
+            val startPosition = viewHolder.adapterPosition
+            val endPosition = target.adapterPosition
 
             Collections.swap(varBlocksList, startPosition, endPosition)
             recyclerView.adapter?.notifyItemMoved(startPosition, endPosition)
             return true
         }
+
 
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
         }
