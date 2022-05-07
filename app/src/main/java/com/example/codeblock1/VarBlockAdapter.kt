@@ -18,12 +18,36 @@ class VarBlockAdapter : RecyclerView.Adapter<VarBlockAdapter.VarBlocksHolder>() 
 
     val varBlocksList = ArrayList<VarBlock>()
 
-    class VarBlocksHolder(item: View):RecyclerView.ViewHolder(item){
+    inner class VarBlocksHolder(item: View):RecyclerView.ViewHolder(item){
         val blockType : TextView = item.findViewById(R.id.nameOfBlock)
         val value : EditText = item.findViewById(R.id.valueOfVariable)
         val name : EditText = item.findViewById(R.id.nameOfVariable)
-    }
 
+        init {
+            name.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+                @SuppressLint("SetTextI18n")
+                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                    varBlocksList[adapterPosition].name = s.toString()
+                }
+
+                override fun afterTextChanged(s: Editable) {}
+            })
+
+            value.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+                @SuppressLint("SetTextI18n")
+                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                    varBlocksList[adapterPosition].value = s.toString()
+                }
+
+                override fun afterTextChanged(s: Editable) {}
+            })
+        }
+    }
+    init {
+        setHasStableIds(true)
+    }
     override fun getItemViewType(position: Int): Int {
         val viewType = when(varBlocksList[position].blockType){
             "PRINT" -> R.layout.print_block
@@ -33,32 +57,19 @@ class VarBlockAdapter : RecyclerView.Adapter<VarBlockAdapter.VarBlocksHolder>() 
         return viewType;
     }
 
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VarBlocksHolder {
         val view = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
         return VarBlocksHolder(view)
     }
 
-    override fun onBindViewHolder(holder: VarBlocksHolder, @SuppressLint("RecyclerView") position: Int) {
+    override fun onBindViewHolder(holder: VarBlocksHolder, position: Int) {
 //        holder.bind(varBlocksList[position])
-        holder.name.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-            @SuppressLint("SetTextI18n")
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-               varBlocksList[position].name = s.toString()
-            }
-
-            override fun afterTextChanged(s: Editable) {}
-        })
-
-        holder.value.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-            @SuppressLint("SetTextI18n")
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                varBlocksList[position].value = s.toString()
-            }
-
-            override fun afterTextChanged(s: Editable) {}
-        })
+        holder.name.setText(varBlocksList[position].name)
+        holder.value.setText(varBlocksList[position].value)
         holder.blockType.text = varBlocksList[position].blockType
     }
 
@@ -104,6 +115,8 @@ class VarBlockAdapter : RecyclerView.Adapter<VarBlockAdapter.VarBlocksHolder>() 
 
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
         }
+
+
 
     }
 }

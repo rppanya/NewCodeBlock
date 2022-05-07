@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.codeblock1.databinding.*
-import kotlinx.android.synthetic.main.code_page.*
+import kotlinx.android.synthetic.main.activity_blocks.*
 
 
 private var canCallConsole = true
@@ -60,92 +60,127 @@ private fun debug(varBlocksList: ArrayList<VarBlock>, console: ConsolePageBindin
 
 class BlocksActivity : Activity() {
     private var clicked = false
-    lateinit var binding: CodePageBinding
+    lateinit var binding: ActivityBlocksBinding
     private val adapter = VarBlockAdapter()
 
     @SuppressLint("InflateParams", "ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = CodePageBinding.inflate(layoutInflater)
+        binding = ActivityBlocksBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         init(this)
 
-        addButton.setOnClickListener{
-            val rotateOpen: Animation by lazy { AnimationUtils.loadAnimation(this, R.anim.rotate_open_anim) }
-            val rotateClose: Animation by lazy { AnimationUtils.loadAnimation(this, R.anim.rotate_close_anim) }
-            val fromBottom: Animation by lazy { AnimationUtils.loadAnimation(this, R.anim.from_bottom_anim) }
-            val toBottom: Animation by lazy { AnimationUtils.loadAnimation(this, R.anim.to_bottom_anim) }
+        binding.addButton.setOnClickListener {
+            val rotateOpen: Animation by lazy {
+                AnimationUtils.loadAnimation(
+                    this,
+                    R.anim.rotate_open_anim
+                )
+            }
+            val rotateClose: Animation by lazy {
+                AnimationUtils.loadAnimation(
+                    this,
+                    R.anim.rotate_close_anim
+                )
+            }
+            val fromBottom: Animation by lazy {
+                AnimationUtils.loadAnimation(
+                    this,
+                    R.anim.from_bottom_anim
+                )
+            }
+            val toBottom: Animation by lazy {
+                AnimationUtils.loadAnimation(
+                    this,
+                    R.anim.to_bottom_anim
+                )
+            }
             if (!clicked) {
-                addButton.startAnimation(rotateOpen)
-                menu.visibility = View.VISIBLE
-                btnVariables.startAnimation(fromBottom)
-                btnIfElse.startAnimation(fromBottom)
-                btnPrint.startAnimation(fromBottom)
+                binding.addButton.startAnimation(rotateOpen)
+                binding.menu.visibility = View.VISIBLE
+                binding.btnVariables.startAnimation(fromBottom)
+                binding.btnIfElse.startAnimation(fromBottom)
+                binding.btnPrint.startAnimation(fromBottom)
 
-                textView2.startAnimation(fromBottom)
-                textView4.startAnimation(fromBottom)
-                textView5.startAnimation(fromBottom)
+                binding.textView2.startAnimation(fromBottom)
+                binding.textView4.startAnimation(fromBottom)
+                binding.textView5.startAnimation(fromBottom)
                 clicked = true
             } else {
-                addButton.startAnimation(rotateClose)
+                binding.addButton.startAnimation(rotateClose)
 
                 clicked = false
-                btnVariables.startAnimation(toBottom)
-                btnIfElse.startAnimation(toBottom)
-                btnPrint.startAnimation(toBottom)
+                binding.btnVariables.startAnimation(toBottom)
+                binding.btnIfElse.startAnimation(toBottom)
+                binding.btnPrint.startAnimation(toBottom)
 
-                textView2.startAnimation(toBottom)
-                textView4.startAnimation(toBottom)
-                textView5.startAnimation(toBottom)
+                binding.textView2.startAnimation(toBottom)
+                binding.textView4.startAnimation(toBottom)
+                binding.textView5.startAnimation(toBottom)
             }
         }
 
 
         val view = LayoutInflater.from(this).inflate(R.layout.console_page, null)
 
-        btnDebug.setOnClickListener{
+        binding.btnDebug.setOnClickListener {
             var l = adapter.callVarBlocksList()
             val console = ConsolePageBinding.bind(view)
             debug(l, console)
         }
 
-        consoleButton.setOnClickListener{
-            if(canCallConsole) {
-                layout_console.addView(view)
+        binding.consoleButton.setOnClickListener {
+            if (canCallConsole) {
+                binding.layoutConsole.addView(view)
                 canCallConsole = false
-               /* val test = ReversePolishNotation("1+3+4*2")
+                /* val test = ReversePolishNotation("1+3+4*2")
                 console.consoleOutput.text = test.RPN()*/
-            }
-            else {
-                layout_console.removeAllViews()
+            } else {
+                binding.layoutConsole.removeAllViews()
                 canCallConsole = true
             }
         }
     }
 
     private fun init(context: Context) {
-        binding.apply{
+        binding.apply {
             rcView.layoutManager = LinearLayoutManager(this@BlocksActivity)
             rcView.adapter = adapter
             val itemTouchHelper = ItemTouchHelper(adapter.simpleCellback)
             itemTouchHelper.attachToRecyclerView(rcView)
 
-            btnVariables.setOnClickListener{
-                /*val blockView = LayoutInflater.from(context).inflate(R.layout.variables_block, null)
-                val layoutBlock = VariablesBlockBinding.bind(blockView)*/
-                val block = VarBlock("NAME", "VALUE", "VAR")
-                adapter.addVarBlock(block)
-            }
+            btnVariables.setOnClickListener {
+                val swipeHandler = object : SwipeToDelete(context) {
+                    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                        val swipeAdapter = rcView.adapter as VarBlockAdapter //????
+                        swipeAdapter.removeAt(viewHolder.adapterPosition)
+                    }
+                }
+                val itemTouchHelperSwipe = ItemTouchHelper(swipeHandler)
+                itemTouchHelperSwipe.attachToRecyclerView(rcView) //???
 
-            btnPrint.setOnClickListener{
-                val block = VarBlock("NAME", "VALUE", "PRINT")
-                adapter.addVarBlock(block)
-            }
+                binding.btnVariables.setOnClickListener {
+                    /*val blockView = LayoutInflater.from(context).inflate(R.layout.variables_block, null)
+                    val layoutBlock = VariablesBlockBinding.bind(blockView)*/
+                    val block = VarBlock("NAME", "VALUE", "VAR")
+                    adapter.addVarBlock(block)
 
-            btnIfElse.setOnClickListener{
-                val block = VarBlock("NAME", "VALUE", "IF")
-                adapter.addVarBlock(block)
+                }
+
+                btnPrint.setOnClickListener {
+                    binding.btnPrint.setOnClickListener {
+                        val block = VarBlock("NAME", "VALUE", "PRINT")
+                        adapter.addVarBlock(block)
+                    }
+
+                    btnIfElse.setOnClickListener {
+                        binding.btnIfElse.setOnClickListener {
+                            val block = VarBlock("NAME", "VALUE", "IF")
+                            adapter.addVarBlock(block)
+                        }
+                    }
+                }
             }
         }
     }
