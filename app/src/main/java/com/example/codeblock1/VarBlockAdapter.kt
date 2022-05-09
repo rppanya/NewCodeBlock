@@ -45,9 +45,7 @@ class VarBlockAdapter : RecyclerView.Adapter<VarBlockAdapter.VarBlocksHolder>() 
             })
         }
     }
-    init {
-        setHasStableIds(true)
-    }
+
     override fun getItemViewType(position: Int): Int {
         val viewType = when(varBlocksList[position].blockType){
             "PRINT" -> R.layout.print_block
@@ -94,10 +92,6 @@ class VarBlockAdapter : RecyclerView.Adapter<VarBlockAdapter.VarBlocksHolder>() 
         return varBlocksList
     }
 
-    /*interface test{
-        fun func() {}
- //в блоксактивити нужно оверрайднуть
-    }*/
     var simpleCellback = object : ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP.or(ItemTouchHelper.DOWN),0) {
         override fun onMove(
             recyclerView: RecyclerView,
