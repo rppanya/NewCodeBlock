@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/blockForVariable"
+        android:layout_width="81dp"
+        android:layout_height="81dp"
+        android:background="@color/ifBlockColor"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.066"
+        tools:ignore="MissingConstraints"
+        android:layout_marginStart="30dp"
+        android:layout_marginVertical="10dp"
+        android:layout_marginEnd="10dp"
+        >
+        <TextView
+            android:id="@+id/nameOfBlock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="29dp"
+            android:layout_marginTop="29dp"
+            android:layout_marginEnd="19dp"
+            android:layout_marginBottom="27dp"
+            android:text=""
+            android:textSize="18sp"
+            android:visibility="invisible"
+            android:textStyle="bold"
+            tools:ignore="RelativeOverlap" />
+        <EditText
+            android:id="@+id/nameOfVariable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="29dp"
+            android:layout_marginTop="29dp"
+            android:layout_marginEnd="19dp"
+            android:layout_marginBottom="27dp"
+            android:text=""
+            android:textSize="18sp"
+            android:visibility="invisible"
+            android:textStyle="bold"
+            tools:ignore="RelativeOverlap" />
+        <EditText
+            android:id="@+id/valueOfVariable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="29dp"
+            android:layout_marginTop="29dp"
+            android:layout_marginEnd="19dp"
+            android:layout_marginBottom="27dp"
+            android:text=""
+            android:visibility="invisible"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            tools:ignore="RelativeOverlap" />
+
+        <RelativeLayout
+            android:layout_width="38dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="-29dp"
+            android:layout_marginEnd="0dp"
+            android:background="@color/blockTypeColor">
+
+            <TextView
+                android:id="@+id/bracket"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginVertical="10dp"
+                android:text="}"
+                android:textSize="40sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
