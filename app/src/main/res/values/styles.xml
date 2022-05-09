@@ -16,8 +16,6 @@
         <item name="android:textSize">17sp</item>
         <item name="android:textColor">@color/white</item>
     </style>
-    <style name="CustomAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <item name="android:windowBackground">@drawable/rounded_corner</item>
-    </style>
+
 
 </resources>

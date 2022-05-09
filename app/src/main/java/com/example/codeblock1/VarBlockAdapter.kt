@@ -3,7 +3,6 @@ package com.example.codeblock1
 import android.annotation.SuppressLint
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,10 +10,11 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.example.codeblock1.VarBlockAdapter.VarBlocksHolder
 import java.util.*
 import kotlin.collections.ArrayList
 
-class VarBlockAdapter : RecyclerView.Adapter<VarBlockAdapter.VarBlocksHolder>() { //private val testVal: test в конструктор
+class VarBlockAdapter : RecyclerView.Adapter<VarBlocksHolder>() { //private val testVal: test в конструктор
 
     val varBlocksList = ArrayList<VarBlock>()
 
@@ -45,13 +45,12 @@ class VarBlockAdapter : RecyclerView.Adapter<VarBlockAdapter.VarBlocksHolder>() 
             })
         }
     }
-    init {
-        setHasStableIds(true)
-    }
+
     override fun getItemViewType(position: Int): Int {
         val viewType = when(varBlocksList[position].blockType){
             "PRINT" -> R.layout.print_block
             "IF" -> R.layout.if_block
+            "END_IF" -> R.layout.end_if_block
             else -> R.layout.variables_block
         }
         return viewType;
@@ -60,7 +59,6 @@ class VarBlockAdapter : RecyclerView.Adapter<VarBlockAdapter.VarBlocksHolder>() 
     override fun getItemId(position: Int): Long {
         return position.toLong()
     }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VarBlocksHolder {
         val view = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
         return VarBlocksHolder(view)
@@ -73,31 +71,54 @@ class VarBlockAdapter : RecyclerView.Adapter<VarBlockAdapter.VarBlocksHolder>() 
         holder.blockType.text = varBlocksList[position].blockType
     }
 
-    override fun getItemCount(): Int {
-        return varBlocksList.size
+
+    fun removeBlock(position: Int){
+        if (varBlocksList[position].blockType == "IF") {
+            var counter = 0
+            for (i in position+1 until varBlocksList.size) {
+                if (varBlocksList[i].blockType == "IF") {
+                    counter++
+                } else if (varBlocksList[i].blockType == "END_IF" && counter-- == 0) {
+                    varBlocksList.removeAt(position)
+                    varBlocksList.removeAt(i-1)
+                    notifyItemRemoved(position)
+                    notifyItemRemoved(i-1)
+                    break
+                }
+            }
+        } else if (varBlocksList[position].blockType == "END_IF") {
+            var counter = 0
+            for (i in position-1 downTo 0) {
+                if (varBlocksList[i].blockType == "END_IF") {
+                    counter++
+                } else if (varBlocksList[i].blockType == "IF" && counter-- == 0) {
+                    varBlocksList.removeAt(i)
+                    varBlocksList.removeAt(position-1)
+                    notifyItemRemoved(i)
+                    notifyItemRemoved(position-1)
+                    break
+                }
+            }
+        }
+        else {
+            varBlocksList.removeAt(position)
+            notifyItemRemoved(position)
+        }
     }
 
-    //testVal.func() - так!!
-
-    fun removeAt(position: Int) {
-        varBlocksList.removeAt(position)
-        notifyItemRemoved(position)
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
     fun addVarBlock(block: VarBlock){
         varBlocksList.add(block)
-        notifyDataSetChanged()
+        notifyItemInserted(varBlocksList.size)
+    }
+
+    override fun getItemCount(): Int {
+        return varBlocksList.size
     }
 
     fun callVarBlocksList(): ArrayList<VarBlock>{
         return varBlocksList
     }
 
-    /*interface test{
-        fun func() {}
- //в блоксактивити нужно оверрайднуть
-    }*/
     var simpleCellback = object : ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP.or(ItemTouchHelper.DOWN),0) {
         override fun onMove(
             recyclerView: RecyclerView,
