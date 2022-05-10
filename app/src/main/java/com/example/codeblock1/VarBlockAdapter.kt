@@ -17,6 +17,7 @@ import kotlin.collections.ArrayList
 class VarBlockAdapter : RecyclerView.Adapter<VarBlocksHolder>() { //private val testVal: test в конструктор
 
     val varBlocksList = ArrayList<VarBlock>()
+    val variables = ArrayList<VarValue>()
 
     inner class VarBlocksHolder(item: View):RecyclerView.ViewHolder(item){
         val blockType : TextView = item.findViewById(R.id.nameOfBlock)

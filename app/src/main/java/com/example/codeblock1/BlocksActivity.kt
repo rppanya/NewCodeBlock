@@ -5,19 +5,16 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.codeblock1.databinding.*
-import kotlinx.android.synthetic.main.activity_blocks.*
+import com.example.codeblock1.databinding.ActivityBlocksBinding
+import com.example.codeblock1.databinding.ConsolePageBinding
 
 
 private var canCallConsole = true
@@ -41,7 +38,7 @@ private fun convertVarToNum(varName: String, varBlocksList: ArrayList<VarBlock>)
             return block.value
         }
     }
-    return "0"
+    return "ERROR"
 }
 
 private fun isVariableInString(s: String): Boolean {
@@ -54,13 +51,13 @@ private fun isDebugValid(varBlocksList: ArrayList<VarBlock>): String{
         when(block.blockType){
             "VAR"->{
                 //name field
-                val uncorrectVar = Regex(pattern = """^([^a-zA-Z])|[^\w\d_]|_$""".trimIndent())
-                if(uncorrectVar.containsMatchIn(block.name)){
-                    return "Uncorrect name of variable: ${block.name}"
+                val incorrectVar = Regex(pattern = """^([^a-zA-Z])|[^\w\d_]|_$""".trimIndent())
+                if(incorrectVar.containsMatchIn(block.name)){
+                    return "Incorrect name of variable: ${block.name}"
                 }
 
                 //value field: variable check
-                var variablePattern = Regex("""([a-z]|[A-Z])[\w\d_]*""".trimIndent()).findAll(input = block.value)
+                val variablePattern = Regex("""([a-z]|[A-Z])[\w\d_]*""".trimIndent()).findAll(input = block.value)
                 variablePattern.forEach {
                     var flag = false
                     varBlocksList.forEach { bl ->
@@ -69,16 +66,31 @@ private fun isDebugValid(varBlocksList: ArrayList<VarBlock>): String{
                         }
                     }
                     if(!flag){
-                        return "Uncorrect name of value: ${block.value}"
+                        return "Incorrect name of value: ${block.value}"
                     }
                 }
 
                 //value field: signs check
-                val uncorrectSigns = Regex(pattern = """[-+*\/%][-+*\/%]""".trimIndent())
+                val incorrectSigns = Regex(pattern = """[-+*/%][-+*/%]""".trimIndent())
+                if(incorrectSigns.containsMatchIn(block.value)){
+                    return "Incorrect arithmetic expression: ${block.value}"
+                }
             }
 
             "PRINT"->{
-
+                val variablePattern = Regex("""([a-z]|[A-Z])[\w\d_]*""".trimIndent()).findAll(input = block.name)
+                variablePattern.forEach { variable ->
+                    var varInd: Int = -1
+                    for(i in 0 until varBlocksList.size){
+                        if(varBlocksList[i].name == variable.toString()){
+                            varInd = i
+                            break
+                        }
+                    }
+                    if(varInd > varBlocksList.indexOf(block) || varInd == -1){
+                        return "Can't find variable: ${variable.value}"
+                    }
+                }
             }
 
             "IF"->{
@@ -91,21 +103,34 @@ private fun isDebugValid(varBlocksList: ArrayList<VarBlock>): String{
 
 @SuppressLint("SetTextI18n")
 private fun run(varBlocksList: ArrayList<VarBlock>, console: ConsolePageBinding){
+    var correctness = isDebugValid(varBlocksList)
+    if(correctness != "Correct"){
+        console.consoleOutput.text = correctness
+        return
+    }
 
     console.consoleOutput.text = ""
     varBlocksList.forEach { block ->
-        if(block.blockType == "PRINT"){
-            var nameCopy: String = block.name
-            if(isVariableInString(block.name)){
-                var pattern: Sequence<MatchResult> = Regex("""([a-z]|[A-Z])[\w\d_]*""".trimIndent()).findAll(input = block.name)
-                pattern = pattern.sortedBy { -it.value.length }
-                pattern.forEach {
-                    val number = convertVarToNum(it.value, varBlocksList)
-                    nameCopy = nameCopy.replace(it.value, number)
+        when (block.blockType) {
+            "PRINT" -> {
+                var nameCopy: String = block.name
+                if (isVariableInString(block.name)) {
+                    var pattern: Sequence<MatchResult> =
+                        Regex("""([a-z]|[A-Z])[\w\d_]*""".trimIndent()).findAll(input = block.name)
+                    pattern = pattern.sortedBy { -it.value.length }
+                    pattern.forEach {
+                        val number = convertVarToNum(it.value, varBlocksList)
+                        nameCopy = nameCopy.replace(it.value, number)
+                    }
+                }
+                try {
+                    val exception = ReversePolishNotation(nameCopy)
+                    console.consoleOutput.text =
+                        console.consoleOutput.text.toString() + exception.RPN() + "\n"
+                } catch (e: Exception) {
+                    console.consoleOutput.text = "Incorrect PRINT value"
                 }
             }
-            val exception = ReversePolishNotation(nameCopy)
-            console.consoleOutput.text = console.consoleOutput.text.toString() + exception.RPN() + "\n"
         }
     }
 }
@@ -183,7 +208,7 @@ class BlocksActivity : Activity() {
         binding.btnDebug.setOnClickListener {
             var l = adapter.callVarBlocksList()
             val console = ConsolePageBinding.bind(view)
-            debug(l, console)
+            run(l, console)
         }
 
         binding.consoleButton.setOnClickListener {
@@ -222,20 +247,20 @@ class BlocksActivity : Activity() {
             itemTouchHelperSwipe.attachToRecyclerView(rcView)
 
             binding.btnVariables.setOnClickListener{
-                val block = VarBlock("NAME", "VALUE", "VAR")
+                val block = VarBlock("", "", "VAR")
                 adapter.addVarBlock(block)
 
             }
 
             binding.btnPrint.setOnClickListener{
-                val block = VarBlock("NAME", "VALUE", "PRINT")
+                val block = VarBlock("", "", "PRINT")
                 adapter.addVarBlock(block)
             }
 
             binding.btnIfElse.setOnClickListener{
-                var block = VarBlock("NAME", "VALUE", "IF")
+                var block = VarBlock("", "", "IF")
                 adapter.addVarBlock(block)
-                block = VarBlock("NAME", "VALUE", "END_IF")
+                block = VarBlock("", "", "END_IF")
                 adapter.addVarBlock(block)
             }
         }
