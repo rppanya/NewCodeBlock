@@ -20,15 +20,15 @@ import com.example.codeblock1.databinding.ConsolePageBinding
 private var canCallConsole = true
 
 
-private fun convertVarToNum(varName: String, varBlocksList: ArrayList<VarBlock>): String{
-    varBlocksList.forEach { block ->
+private fun convertVarToNum(varName: String, variables: ArrayList<VarValue>): String{
+    variables.forEach { block ->
         if(block.name == varName){
             if(isVariableInString(block.value)){
                 var nameCopy: String = block.value
                 var pattern: Sequence<MatchResult> = Regex("""([a-z]|[A-Z])[\w\d_]*""".trimIndent()).findAll(input = block.value)
                 pattern = pattern.sortedBy { -it.value.length }
                 pattern.forEach {
-                    val number = convertVarToNum(it.value, varBlocksList)
+                    val number = convertVarToNum(it.value, variables)
                     nameCopy = nameCopy.replace(it.value, number)
                 }
                 val exception = ReversePolishNotation(nameCopy)
@@ -88,7 +88,7 @@ private fun isDebugValid(varBlocksList: ArrayList<VarBlock>): String{
                         }
                     }
                     if(varInd > varBlocksList.indexOf(block) || varInd == -1){
-                        return "Can't find variable: ${variable.value}, $varInd, ${varBlocksList.indexOf(block)}"
+                        return "Can't find variable: ${variable.value}"
                     }
                 }
             }
@@ -101,9 +101,19 @@ private fun isDebugValid(varBlocksList: ArrayList<VarBlock>): String{
     return "Correct"
 }
 
+private fun findVarInd(nameOfVar: String, variables: ArrayList<VarValue>): Int{
+    for(i in 0 until variables.size){
+        if(variables[i].name == nameOfVar){
+            return i
+        }
+    }
+    return -1
+}
+
 @SuppressLint("SetTextI18n")
 private fun run(varBlocksList: ArrayList<VarBlock>, console: ConsolePageBinding){
     var correctness = isDebugValid(varBlocksList)
+    var variables = ArrayList<VarValue>()
     if(correctness != "Correct"){
         console.consoleOutput.text = correctness
         return
@@ -113,6 +123,15 @@ private fun run(varBlocksList: ArrayList<VarBlock>, console: ConsolePageBinding)
     var i: Int = 0
     while(i < varBlocksList.size) {
         when (varBlocksList[i].blockType) {
+            "VAR" ->{
+                val ind = findVarInd(varBlocksList[i].name, variables)
+                if(ind != -1){
+                    variables[ind].value = varBlocksList[i].value
+                } else {
+                    variables.add(VarValue(varBlocksList[i].name, varBlocksList[i].value))
+                }
+            }
+
             "PRINT" -> {
                 var nameCopy: String = varBlocksList[i].name
                 if (isVariableInString(varBlocksList[i].name)) {
@@ -120,7 +139,7 @@ private fun run(varBlocksList: ArrayList<VarBlock>, console: ConsolePageBinding)
                         Regex("""([a-z]|[A-Z])[\w\d_]*""".trimIndent()).findAll(input = varBlocksList[i].name)
                     pattern = pattern.sortedBy { -it.value.length }
                     pattern.forEach {
-                        val number = convertVarToNum(it.value, varBlocksList)
+                        val number = convertVarToNum(it.value, variables)
                         nameCopy = nameCopy.replace(it.value, number)
                     }
                 }
@@ -132,6 +151,7 @@ private fun run(varBlocksList: ArrayList<VarBlock>, console: ConsolePageBinding)
                     console.consoleOutput.text = "Incorrect PRINT value"
                 }
             }
+
             "IF" -> {
                 var nameCopy: String = varBlocksList[i].name
                 if (isVariableInString(varBlocksList[i].name)) {
@@ -139,7 +159,7 @@ private fun run(varBlocksList: ArrayList<VarBlock>, console: ConsolePageBinding)
                         Regex("""([a-z]|[A-Z])[\w\d_]*""".trimIndent()).findAll(input = varBlocksList[i].name)
                     pattern = pattern.sortedBy { -it.value.length }
                     pattern.forEach {
-                        val number = convertVarToNum(it.value, varBlocksList)
+                        val number = convertVarToNum(it.value, variables)
                         nameCopy = nameCopy.replace(it.value, number)
                     }
                 }
@@ -235,9 +255,8 @@ class BlocksActivity : Activity() {
         binding.btnDebug.setOnClickListener {
             val varBlocksList = adapter.callVarBlocksList()
             val console = ConsolePageBinding.bind(view)
-            val variables = adapter.callVariablesList()
+            //val variables = adapter.callVariablesList()
             run(varBlocksList, console)
-            //console.consoleOutput.text = variables.toString()
         }
 
         binding.consoleButton.setOnClickListener {

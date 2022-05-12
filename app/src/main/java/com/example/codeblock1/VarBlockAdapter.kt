@@ -17,7 +17,6 @@ import kotlin.collections.ArrayList
 class VarBlockAdapter : RecyclerView.Adapter<VarBlocksHolder>() { //private val testVal: test в конструктор
 
     val varBlocksList = ArrayList<VarBlock>()
-    val variables = ArrayList<VarValue>()
 
     inner class VarBlocksHolder(item: View):RecyclerView.ViewHolder(item){
         val blockType : TextView = item.findViewById(R.id.nameOfBlock)
@@ -26,35 +25,13 @@ class VarBlockAdapter : RecyclerView.Adapter<VarBlocksHolder>() { //private val 
 
         init {
             name.addTextChangedListener(object : TextWatcher {
-                lateinit var prevName: String
-                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-                    prevName = varBlocksList[adapterPosition].name
-                }
+                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
                 @SuppressLint("SetTextI18n")
                 override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                     varBlocksList[adapterPosition].name = s.toString()
                 }
 
-                override fun afterTextChanged(s: Editable) {
-                    if(varBlocksList[adapterPosition].blockType == "VAR"){
-                        var varAvailable = false
-                       for(i in 0 until variables.size){
-                           if(variables[i].name == s.toString()){
-                               varAvailable = true
-                               break
-                           }
-                       }
-                        if(!varAvailable){
-                            for(i in 0 until variables.size){
-                                if(variables[i].name == prevName){
-                                    variables.removeAt(i)
-                                    break
-                                }
-                            }
-                            variables.add(VarValue(s.toString(), prevName))
-                        }
-                    }
-                }
+                override fun afterTextChanged(s: Editable) {}
             })
 
             value.addTextChangedListener(object : TextWatcher {
@@ -142,9 +119,9 @@ class VarBlockAdapter : RecyclerView.Adapter<VarBlocksHolder>() { //private val 
         return varBlocksList
     }
 
-    fun callVariablesList(): ArrayList<VarValue>{
+    /*fun callVariablesList(): ArrayList<VarValue>{
         return variables
-    }
+    }*/
 
     var simpleCellback = object : ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP.or(ItemTouchHelper.DOWN),0) {
         override fun onMove(
