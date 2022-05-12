@@ -82,13 +82,13 @@ private fun isDebugValid(varBlocksList: ArrayList<VarBlock>): String{
                 variablePattern.forEach { variable ->
                     var varInd: Int = -1
                     for(i in 0 until varBlocksList.size){
-                        if(varBlocksList[i].name == variable.toString()){
+                        if(varBlocksList[i].name == variable.value && varBlocksList[i].blockType == "VAR"){
                             varInd = i
                             break
                         }
                     }
                     if(varInd > varBlocksList.indexOf(block) || varInd == -1){
-                        return "Can't find variable: ${variable.value}"
+                        return "Can't find variable: ${variable.value}, $varInd, ${varBlocksList.indexOf(block)}"
                     }
                 }
             }
@@ -110,13 +110,14 @@ private fun run(varBlocksList: ArrayList<VarBlock>, console: ConsolePageBinding)
     }
 
     console.consoleOutput.text = ""
-    varBlocksList.forEach { block ->
-        when (block.blockType) {
+    var i: Int = 0
+    while(i < varBlocksList.size) {
+        when (varBlocksList[i].blockType) {
             "PRINT" -> {
-                var nameCopy: String = block.name
-                if (isVariableInString(block.name)) {
+                var nameCopy: String = varBlocksList[i].name
+                if (isVariableInString(varBlocksList[i].name)) {
                     var pattern: Sequence<MatchResult> =
-                        Regex("""([a-z]|[A-Z])[\w\d_]*""".trimIndent()).findAll(input = block.name)
+                        Regex("""([a-z]|[A-Z])[\w\d_]*""".trimIndent()).findAll(input = varBlocksList[i].name)
                     pattern = pattern.sortedBy { -it.value.length }
                     pattern.forEach {
                         val number = convertVarToNum(it.value, varBlocksList)
@@ -131,7 +132,33 @@ private fun run(varBlocksList: ArrayList<VarBlock>, console: ConsolePageBinding)
                     console.consoleOutput.text = "Incorrect PRINT value"
                 }
             }
+            "IF" -> {
+                var nameCopy: String = varBlocksList[i].name
+                if (isVariableInString(varBlocksList[i].name)) {
+                    var pattern: Sequence<MatchResult> =
+                        Regex("""([a-z]|[A-Z])[\w\d_]*""".trimIndent()).findAll(input = varBlocksList[i].name)
+                    pattern = pattern.sortedBy { -it.value.length }
+                    pattern.forEach {
+                        val number = convertVarToNum(it.value, varBlocksList)
+                        nameCopy = nameCopy.replace(it.value, number)
+                    }
+                }
+                val condition = InterpreterForInequalities(nameCopy)
+                if(!condition.interpretInequality()) {
+                    var skip = 0
+                    for(j in i + 1 until varBlocksList.size){
+                        if(varBlocksList[j].blockType != "END_IF"){
+                            skip++
+                        }
+                        else{
+                            break
+                        }
+                    }
+                   i += (skip+1)
+                }
+            }
         }
+        i++
     }
 }
 
@@ -206,9 +233,11 @@ class BlocksActivity : Activity() {
         val view = LayoutInflater.from(this).inflate(R.layout.console_page, null)
 
         binding.btnDebug.setOnClickListener {
-            var l = adapter.callVarBlocksList()
+            val varBlocksList = adapter.callVarBlocksList()
             val console = ConsolePageBinding.bind(view)
-            run(l, console)
+            val variables = adapter.callVariablesList()
+            run(varBlocksList, console)
+            //console.consoleOutput.text = variables.toString()
         }
 
         binding.consoleButton.setOnClickListener {

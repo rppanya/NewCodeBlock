@@ -26,13 +26,35 @@ class VarBlockAdapter : RecyclerView.Adapter<VarBlocksHolder>() { //private val 
 
         init {
             name.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+                lateinit var prevName: String
+                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+                    prevName = varBlocksList[adapterPosition].name
+                }
                 @SuppressLint("SetTextI18n")
                 override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                     varBlocksList[adapterPosition].name = s.toString()
                 }
 
-                override fun afterTextChanged(s: Editable) {}
+                override fun afterTextChanged(s: Editable) {
+                    if(varBlocksList[adapterPosition].blockType == "VAR"){
+                        var varAvailable = false
+                       for(i in 0 until variables.size){
+                           if(variables[i].name == s.toString()){
+                               varAvailable = true
+                               break
+                           }
+                       }
+                        if(!varAvailable){
+                            for(i in 0 until variables.size){
+                                if(variables[i].name == prevName){
+                                    variables.removeAt(i)
+                                    break
+                                }
+                            }
+                            variables.add(VarValue(s.toString(), prevName))
+                        }
+                    }
+                }
             })
 
             value.addTextChangedListener(object : TextWatcher {
@@ -118,6 +140,10 @@ class VarBlockAdapter : RecyclerView.Adapter<VarBlocksHolder>() { //private val 
 
     fun callVarBlocksList(): ArrayList<VarBlock>{
         return varBlocksList
+    }
+
+    fun callVariablesList(): ArrayList<VarValue>{
+        return variables
     }
 
     var simpleCellback = object : ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP.or(ItemTouchHelper.DOWN),0) {
