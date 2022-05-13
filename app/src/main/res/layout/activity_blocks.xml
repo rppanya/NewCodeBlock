@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BlocksActivity">
+    tools:context=".BlocksActivity"
+    >
 
 
     <LinearLayout
@@ -97,53 +98,76 @@
 
     <LinearLayout
         android:id="@+id/menu"
-        android:layout_width="169dp"
-        android:layout_height="163dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
         android:orientation="horizontal"
         android:visibility="invisible"
+        android:gravity="right"
         app:layout_constraintBottom_toTopOf="@+id/addButton"
         app:layout_constraintEnd_toEndOf="@+id/addButton">
 
         <LinearLayout
-            android:layout_width="91dp"
-            android:layout_height="199dp"
-            android:layout_marginEnd="28dp"
-            android:orientation="vertical">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:orientation="vertical"
+            android:gravity="right">
 
             <TextView
                 android:id="@+id/textView2"
                 style="@style/menu_text"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:text="New variable"
+                android:padding="3dp"
+                android:textAlignment="viewEnd"
+                android:elevation="2dp"
+                android:background="@drawable/text_menu_background"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView3"
+                style="@style/menu_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="While"
+                android:padding="3dp"
+                android:textAlignment="viewEnd"
+                android:elevation="2dp"
+                android:background="@drawable/text_menu_background"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textView4"
                 style="@style/menu_text"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:padding="3dp"
+                android:textAlignment="viewEnd"
+                android:elevation="2dp"
+                android:background="@drawable/text_menu_background"
                 android:text="If else"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textView5"
                 style="@style/menu_text"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:padding="3dp"
+                android:textAlignment="viewEnd"
+                android:elevation="2dp"
+                android:background="@drawable/text_menu_background"
                 android:text="Print"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="197dp"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="4dp"
             android:orientation="vertical">
 
@@ -151,8 +175,17 @@
                 android:id="@+id/btnVariables"
                 style="@style/menu_buttons"
                 android:backgroundTint="@color/valBlockColorMenu"
-                app:borderWidth="0dp"
                 android:clickable="true"
+                app:borderWidth="0dp"
+                app:srcCompat="@drawable/ic_baseline_turned_in_not_24"
+                tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btnWhile"
+                style="@style/menu_buttons"
+                android:backgroundTint="@color/whileBlockColorMenu"
+                android:clickable="true"
+                app:borderWidth="0dp"
                 app:srcCompat="@drawable/ic_baseline_turned_in_not_24"
                 tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
@@ -161,8 +194,8 @@
                 android:id="@+id/btnIfElse"
                 style="@style/menu_buttons"
                 android:backgroundTint="@color/ifBlockColorMenu"
-                app:borderWidth="0dp"
                 android:clickable="true"
+                app:borderWidth="0dp"
                 app:srcCompat="@drawable/ic_baseline_redo_24"
                 tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
@@ -170,8 +203,8 @@
                 android:id="@+id/btnPrint"
                 style="@style/menu_buttons"
                 android:backgroundTint="@color/printBlockColorMenu"
-                app:borderWidth="0dp"
                 android:clickable="true"
+                app:borderWidth="0dp"
                 app:srcCompat="@drawable/ic_baseline_comment_24"
                 tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 

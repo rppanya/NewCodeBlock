@@ -42,6 +42,7 @@ class VarBlockAdapter : RecyclerView.Adapter<VarBlocksHolder>() { //private val 
                 }
 
                 override fun afterTextChanged(s: Editable) {}
+
             })
         }
     }
@@ -51,6 +52,8 @@ class VarBlockAdapter : RecyclerView.Adapter<VarBlocksHolder>() { //private val 
             "PRINT" -> R.layout.print_block
             "IF" -> R.layout.if_block
             "END_IF" -> R.layout.end_if_block
+            "WHILE" -> R.layout.while_block
+            "END_WHILE" -> R.layout.end_while_block
             else -> R.layout.variables_block
         }
         return viewType;
@@ -99,8 +102,33 @@ class VarBlockAdapter : RecyclerView.Adapter<VarBlocksHolder>() { //private val 
                     break
                 }
             }
-        }
-        else {
+        } else if (varBlocksList[position].blockType == "WHILE") {
+            var counter = 0
+            for (i in position+1 until varBlocksList.size) {
+                if (varBlocksList[i].blockType == "WHILE") {
+                    counter++
+                } else if (varBlocksList[i].blockType == "END_WHILE" && counter-- == 0) {
+                    varBlocksList.removeAt(position)
+                    varBlocksList.removeAt(i-1)
+                    notifyItemRemoved(position)
+                    notifyItemRemoved(i-1)
+                    break
+                }
+            }
+        } else if (varBlocksList[position].blockType == "END_WHILE") {
+            var counter = 0
+            for (i in position-1 downTo 0) {
+                if (varBlocksList[i].blockType == "END_WHILE") {
+                    counter++
+                } else if (varBlocksList[i].blockType == "WHILE" && counter-- == 0) {
+                    varBlocksList.removeAt(i)
+                    varBlocksList.removeAt(position-1)
+                    notifyItemRemoved(i)
+                    notifyItemRemoved(position-1)
+                    break
+                }
+            }
+        } else {
             varBlocksList.removeAt(position)
             notifyItemRemoved(position)
         }

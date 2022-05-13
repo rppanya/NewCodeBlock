@@ -20,185 +20,10 @@ import com.example.codeblock1.databinding.ConsolePageBinding
 private var canCallConsole = true
 
 
-private fun convertVarToNum(varName: String, variables: ArrayList<VarValue>): String{
-    variables.forEach { block ->
-        if(block.name == varName){
-            if(isVariableInString(block.value)){
-                var nameCopy: String = block.value
-                var pattern: Sequence<MatchResult> = Regex("""([a-z]|[A-Z])[\w\d_]*""".trimIndent()).findAll(input = block.value)
-                pattern = pattern.sortedBy { -it.value.length }
-                pattern.forEach {
-                    val number = convertVarToNum(it.value, variables)
-                    nameCopy = nameCopy.replace(it.value, number)
-                }
-                val exception = ReversePolishNotation(nameCopy)
-                Log.d("arrr", exception.RPN())
-                return exception.RPN()
-            }
-            return block.value
-        }
-    }
-    return "ERROR"
-}
-
-private fun isVariableInString(s: String): Boolean {
-    val pattern = Regex(pattern = """[^\d]""")
-    return pattern.containsMatchIn(s)
-}
-
-private fun isDebugValid(varBlocksList: ArrayList<VarBlock>): String{
-    varBlocksList.forEach { block ->
-        when(block.blockType){
-            "VAR"->{
-                //name field
-                val incorrectVar = Regex(pattern = """^([^a-zA-Z])|[^\w\d_]|_$""".trimIndent())
-                if(incorrectVar.containsMatchIn(block.name)){
-                    return "Incorrect name of variable: ${block.name}"
-                }
-
-                //value field: variable check
-                val variablePattern = Regex("""([a-z]|[A-Z])[\w\d_]*""".trimIndent()).findAll(input = block.value)
-                variablePattern.forEach {
-                    var flag = false
-                    varBlocksList.forEach { bl ->
-                        if(bl.name == it.value){
-                            flag = true
-                        }
-                    }
-                    if(!flag){
-                        return "Incorrect name of value: ${block.value}"
-                    }
-                }
-
-                //value field: signs check
-                val incorrectSigns = Regex(pattern = """[-+*/%][-+*/%]""".trimIndent())
-                if(incorrectSigns.containsMatchIn(block.value)){
-                    return "Incorrect arithmetic expression: ${block.value}"
-                }
-            }
-
-            "PRINT"->{
-                val variablePattern = Regex("""([a-z]|[A-Z])[\w\d_]*""".trimIndent()).findAll(input = block.name)
-                variablePattern.forEach { variable ->
-                    var varInd: Int = -1
-                    for(i in 0 until varBlocksList.size){
-                        if(varBlocksList[i].name == variable.value && varBlocksList[i].blockType == "VAR"){
-                            varInd = i
-                            break
-                        }
-                    }
-                    if(varInd > varBlocksList.indexOf(block) || varInd == -1){
-                        return "Can't find variable: ${variable.value}"
-                    }
-                }
-            }
-
-            "IF"->{
-
-            }
-        }
-    }
-    return "Correct"
-}
-
-private fun findVarInd(nameOfVar: String, variables: ArrayList<VarValue>): Int{
-    for(i in 0 until variables.size){
-        if(variables[i].name == nameOfVar){
-            return i
-        }
-    }
-    return -1
-}
-
-@SuppressLint("SetTextI18n")
-private fun run(varBlocksList: ArrayList<VarBlock>, console: ConsolePageBinding){
-    var correctness = isDebugValid(varBlocksList)
-    var variables = ArrayList<VarValue>()
-    if(correctness != "Correct"){
-        console.consoleOutput.text = correctness
-        return
-    }
-
-    console.consoleOutput.text = ""
-    var i: Int = 0
-    while(i < varBlocksList.size) {
-        when (varBlocksList[i].blockType) {
-            "VAR" ->{
-                val ind = findVarInd(varBlocksList[i].name, variables)
-                if(ind != -1){
-                    var flag = false
-                    var varPattern: Sequence<MatchResult> =
-                        Regex("""([a-z]|[A-Z])[\w\d_]*""".trimIndent()).findAll(input = varBlocksList[i].value)
-                    varPattern.forEach {
-                        if(it.value == variables[ind].name){
-                            val number = convertVarToNum(it.value, variables)
-                            variables[ind].value = varBlocksList[i].value
-                            variables[ind].value = variables[ind].value.replace(it.value, number)
-                            flag = true
-                        }
-                    }
-                    if(!flag){
-                        variables[ind].value = varBlocksList[i].value
-                    }
-                } else {
-                    variables.add(VarValue(varBlocksList[i].name, varBlocksList[i].value))
-                }
-            }
-
-            "PRINT" -> {
-                var nameCopy: String = varBlocksList[i].name
-                if (isVariableInString(varBlocksList[i].name)) {
-                    var pattern: Sequence<MatchResult> =
-                        Regex("""([a-z]|[A-Z])[\w\d_]*""".trimIndent()).findAll(input = varBlocksList[i].name)
-                    pattern = pattern.sortedBy { -it.value.length }
-                    pattern.forEach {
-                        val number = convertVarToNum(it.value, variables)
-                        nameCopy = nameCopy.replace(it.value, number)
-                    }
-                }
-                try {
-                    val exception = ReversePolishNotation(nameCopy)
-                    console.consoleOutput.text =
-                        console.consoleOutput.text.toString() + exception.RPN() + "\n"
-                } catch (e: Exception) {
-                    console.consoleOutput.text = "Incorrect PRINT value"
-                }
-            }
-
-            "IF" -> {
-                var nameCopy: String = varBlocksList[i].name
-                if (isVariableInString(varBlocksList[i].name)) {
-                    var pattern: Sequence<MatchResult> =
-                        Regex("""([a-z]|[A-Z])[\w\d_]*""".trimIndent()).findAll(input = varBlocksList[i].name)
-                    pattern = pattern.sortedBy { -it.value.length }
-                    pattern.forEach {
-                        val number = convertVarToNum(it.value, variables)
-                        nameCopy = nameCopy.replace(it.value, number)
-                    }
-                }
-                val condition = InterpreterForInequalities(nameCopy)
-                if(!condition.interpretInequality()) {
-                    var skip = 0
-                    for(j in i + 1 until varBlocksList.size){
-                        if(varBlocksList[j].blockType != "END_IF"){
-                            skip++
-                        }
-                        else{
-                            break
-                        }
-                    }
-                   i += (skip+1)
-                }
-            }
-        }
-        i++
-    }
-}
-
 
 class BlocksActivity : Activity() {
     private var clicked = false
-    lateinit var binding: ActivityBlocksBinding
+    lateinit var binding: com.example.codeblock1.databinding.ActivityBlocksBinding
     private val adapter = VarBlockAdapter()
 
     @SuppressLint("InflateParams", "ClickableViewAccessibility")
@@ -239,9 +64,11 @@ class BlocksActivity : Activity() {
                 binding.menu.visibility = View.VISIBLE
                 binding.btnVariables.startAnimation(fromBottom)
                 binding.btnIfElse.startAnimation(fromBottom)
+                binding.btnWhile.startAnimation(fromBottom)
                 binding.btnPrint.startAnimation(fromBottom)
 
                 binding.textView2.startAnimation(fromBottom)
+                binding.textView3.startAnimation(fromBottom)
                 binding.textView4.startAnimation(fromBottom)
                 binding.textView5.startAnimation(fromBottom)
                 clicked = true
@@ -267,9 +94,11 @@ class BlocksActivity : Activity() {
 
         binding.btnDebug.setOnClickListener {
             val varBlocksList = adapter.callVarBlocksList()
-            val console = ConsolePageBinding.bind(view)
+            val console = com.example.codeblock1.databinding.ConsolePageBinding.bind(view)
             //val variables = adapter.callVariablesList()
-            run(varBlocksList, console)
+            //run(varBlocksList, console)
+            val current = Run()
+            current.run(varBlocksList, console)
         }
 
         binding.consoleButton.setOnClickListener {
@@ -322,6 +151,12 @@ class BlocksActivity : Activity() {
                 var block = VarBlock("", "", "IF")
                 adapter.addVarBlock(block)
                 block = VarBlock("", "", "END_IF")
+                adapter.addVarBlock(block)
+            }
+            binding.btnWhile.setOnClickListener{
+                var block = VarBlock("", "", "WHILE")
+                adapter.addVarBlock(block)
+                block = VarBlock("", "", "END_WHILE")
                 adapter.addVarBlock(block)
             }
         }

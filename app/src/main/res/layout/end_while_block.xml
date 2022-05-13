@@ -22,7 +22,7 @@
             android:id="@+id/emptyField"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@color/ifBlockColor">
+            android:background="@color/whileBlockColor">
 
             <TextView
                 android:id="@+id/nameOfBlock"
