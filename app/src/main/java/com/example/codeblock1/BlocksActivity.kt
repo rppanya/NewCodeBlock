@@ -126,7 +126,20 @@ private fun run(varBlocksList: ArrayList<VarBlock>, console: ConsolePageBinding)
             "VAR" ->{
                 val ind = findVarInd(varBlocksList[i].name, variables)
                 if(ind != -1){
-                    variables[ind].value = varBlocksList[i].value
+                    var flag = false
+                    var varPattern: Sequence<MatchResult> =
+                        Regex("""([a-z]|[A-Z])[\w\d_]*""".trimIndent()).findAll(input = varBlocksList[i].value)
+                    varPattern.forEach {
+                        if(it.value == variables[ind].name){
+                            val number = convertVarToNum(it.value, variables)
+                            variables[ind].value = varBlocksList[i].value
+                            variables[ind].value = variables[ind].value.replace(it.value, number)
+                            flag = true
+                        }
+                    }
+                    if(!flag){
+                        variables[ind].value = varBlocksList[i].value
+                    }
                 } else {
                     variables.add(VarValue(varBlocksList[i].name, varBlocksList[i].value))
                 }
