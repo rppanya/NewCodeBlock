@@ -103,6 +103,14 @@ class Run {
         }
         return -1
     }
+    private fun varBeforeIf(VarBlocksList: ArrayList<VarBlock>, start: Int, finish: Int, name: String) : Boolean {
+        for (i in finish downTo start) {
+            if (VarBlocksList[i].blockType == "VAR" && VarBlocksList[i].name == name) {
+                return true
+            }
+        }
+        return false
+    }
 
     @SuppressLint("SetTextI18n")
     fun run(varBlocksList: ArrayList<VarBlock>, console: ConsolePageBinding){
@@ -207,66 +215,50 @@ class Run {
                     } else {
                         for (j in i - 1 downTo stackForIf.last()) {
                             if (varBlocksList[j].blockType == "VAR") {
+                                if (!varBeforeIf(varBlocksList, 0, stackForIf.last(), varBlocksList[j].name)) {
 
-                                for (k in 0 until variables.size) {
-                                    if (variables[k].name == varBlocksList[k].name) {
-                                        variables.removeAt(k)
+                                    for (k in 0 until variables.size) {
+                                        if (variables[k].name == varBlocksList[j].name) {
+                                            variables.removeAt(k)
+                                        }
                                     }
                                 }
-
                             }
                         }
                         stackForIf.removeAt(stackForIf.lastIndex)
                     }
                 }
                 "WHILE" -> {
-                    /*stackForWhile.add(i)
-                    var nameCopy: String = varBlocksList[i].name
-                    if (isVariableInString(varBlocksList[i].name)) {
-                        var pattern: Sequence<MatchResult> =
-                            Regex("""([a-z]|[A-Z])[\w\d_]*""".trimIndent()).findAll(input = varBlocksList[i].name)
-                        pattern = pattern.sortedBy { -it.value.length }
-                        pattern.forEach {
-                            val number = convertVarToNum(it.value, variables)
-                            nameCopy = nameCopy.replace(it.value, number)
-                        }
-                    }
-                    try {
-                        val condition = InterpreterForInequalities(nameCopy)
-                        if (!condition.interpretInequality()) {
-                            var skip = 0
-                            for (j in i + 1 until varBlocksList.size) {
-                                if (varBlocksList[j].blockType != "END_WHILE") {
-                                    skip++
-                                } else {
-                                    break
-                                }
-                            }
-                            i += (skip + 1)
-                        }
-                    } catch (e: Exception){
-                        console.consoleOutput.text = "Incorrect WHILE value"
-                    }
-*/
+                    stackForWhile.add(i)
+
                 }
                 "END_WHILE" -> {
-                    /*if (stackForWhile.isEmpty()) {
+                    if (stackForWhile.isEmpty()) {
                         console.consoleOutput.text = "Invalid WHILE operator brackets"
                     } else {
-                        for (j in i - 1 downTo stackForWhile.last()) {
-                            if (varBlocksList[j].blockType == "VAR") {
-                                variables.remove(
-                                    VarValue(
-                                        varBlocksList[j].name,
-                                        varBlocksList[j].value
-                                    )
-                                )
+
+                        var nameCopy: String = varBlocksList[stackForWhile.last()].name
+                        if (isVariableInString(varBlocksList[stackForWhile.last()].name)) {
+                            var pattern: Sequence<MatchResult> =
+                                Regex("""([a-z]|[A-Z])[\w\d_]*""".trimIndent()).findAll(input = varBlocksList[stackForWhile.last()].name)
+                            pattern = pattern.sortedBy { -it.value.length }
+                            pattern.forEach {
+                                val number = convertVarToNum(it.value, variables)
+                                nameCopy = nameCopy.replace(it.value, number)
                             }
                         }
-                        i = stackForIf.lastIndex+1
-                        stackForWhile.removeAt(stackForWhile.lastIndex)
+                        try {
+                            val condition = InterpreterForInequalities(nameCopy)
+                            if (condition.interpretInequality()) {
+                                i = stackForWhile.last() - 1
+                            } else {
+                                stackForWhile.removeAt(stackForWhile.lastIndex)
+                            }
+                        } catch (e: Exception) {
+                            console.consoleOutput.text = "Incorrect WHILE value"
+                        }
 
-                    }*/
+                    }
                 }
             }
             i++
