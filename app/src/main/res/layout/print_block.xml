@@ -8,7 +8,7 @@
     <RelativeLayout
         android:id="@+id/blockForVariable"
         android:layout_width="331dp"
-        android:layout_height="81dp"
+        android:layout_height="50dp"
         android:background="@color/printBlockColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.066"
         tools:ignore="MissingConstraints"
-        android:layout_margin="10dp">
+        android:layout_margin="5dp">
 
         <EditText
             android:id="@+id/valueOfVariable"
@@ -36,9 +36,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="87dp"
-            android:layout_marginTop="17dp"
             android:layout_marginEnd="7dp"
-            android:layout_marginBottom="14dp"
             android:ems="10"
             android:hint="Name"
             android:inputType="textPersonName"
@@ -66,11 +64,8 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginStart="9dp"
-                android:layout_marginTop="29dp"
-                android:layout_marginEnd="12dp"
-                android:layout_marginBottom="29dp"
                 android:text="PRINT"
+                android:gravity="center"
                 android:textSize="18sp"
                 android:textStyle="bold" />
         </RelativeLayout>

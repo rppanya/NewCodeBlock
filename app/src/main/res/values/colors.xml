@@ -12,13 +12,13 @@
     <color name="dark_blue">#5b86e5</color>
     <color name="light_blue">#95B5FD</color>
     <color name="salad">#36d1dc</color>
-    <color name="printBlockColor">#9DDCEE</color>
+    <color name="printBlockColor">#ACFAC9</color>
     <color name="blockTypeColor">#CCCCCC</color>
     <color name="whileBlockColor">#DBC7FD</color>
     <color name="whileBlockColorMenu">#A26CFF</color>
     <color name="ifBlockColor">#EFD2A7</color>
     <color name="valBlockColorMenu">#F86AAB</color>
-    <color name="printBlockColorMenu">#00C6FF</color>
+    <color name="printBlockColorMenu">#17FB6C</color>
     <color name="ifBlockColorMenu">#FF9800</color>
     <color name="red">#FF6F6F</color>
 

@@ -8,15 +8,15 @@
     <RelativeLayout
         android:id="@+id/blockForVariable"
         android:layout_width="331dp"
-        android:layout_height="81dp"
+        android:layout_height="50dp"
+        android:layout_margin="5dp"
         android:background="@color/valBlockColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.066"
-        tools:ignore="MissingConstraints"
-        android:layout_margin="10dp">
+        tools:ignore="MissingConstraints">
 
         <EditText
             android:id="@+id/valueOfVariable"
@@ -27,9 +27,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="211dp"
-            android:layout_marginTop="15dp"
             android:layout_marginEnd="14dp"
-            android:layout_marginBottom="14dp"
             android:ems="10"
             android:hint="Value"
             android:inputType="textPersonName" />
@@ -43,9 +41,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="87dp"
-            android:layout_marginTop="15dp"
             android:layout_marginEnd="138dp"
-            android:layout_marginBottom="14dp"
             android:ems="10"
             android:hint="Name"
             android:inputType="textPersonName"
@@ -73,10 +69,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginStart="9dp"
-                android:layout_marginTop="29dp"
-                android:layout_marginEnd="19dp"
-                android:layout_marginBottom="27dp"
+                android:gravity="center"
                 android:text="VAR"
                 android:textSize="18sp"
                 android:textStyle="bold" />
