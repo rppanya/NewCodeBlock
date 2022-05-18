@@ -101,9 +101,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
+        android:gravity="right"
         android:orientation="horizontal"
         android:visibility="invisible"
-        android:gravity="right"
         app:layout_constraintBottom_toTopOf="@+id/addButton"
         app:layout_constraintEnd_toEndOf="@+id/addButton">
 
@@ -111,19 +111,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
-            android:orientation="vertical"
-            android:gravity="right">
+            android:gravity="right"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/textView2"
                 style="@style/menu_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="New variable"
-                android:padding="3dp"
-                android:textAlignment="viewEnd"
-                android:elevation="2dp"
                 android:background="@drawable/text_menu_background"
+                android:elevation="2dp"
+                android:padding="3dp"
+                android:text="New variable"
+                android:textAlignment="viewEnd"
                 android:textStyle="bold" />
 
             <TextView
@@ -131,11 +131,11 @@
                 style="@style/menu_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="While"
-                android:padding="3dp"
-                android:textAlignment="viewEnd"
-                android:elevation="2dp"
                 android:background="@drawable/text_menu_background"
+                android:elevation="2dp"
+                android:padding="3dp"
+                android:text="While"
+                android:textAlignment="viewEnd"
                 android:textStyle="bold" />
 
             <TextView
@@ -143,11 +143,11 @@
                 style="@style/menu_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="3dp"
-                android:textAlignment="viewEnd"
-                android:elevation="2dp"
                 android:background="@drawable/text_menu_background"
-                android:text="If else"
+                android:elevation="2dp"
+                android:padding="3dp"
+                android:text="If"
+                android:textAlignment="viewEnd"
                 android:textStyle="bold" />
 
             <TextView
@@ -155,11 +155,23 @@
                 style="@style/menu_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="3dp"
-                android:textAlignment="viewEnd"
-                android:elevation="2dp"
                 android:background="@drawable/text_menu_background"
+                android:elevation="2dp"
+                android:padding="3dp"
+                android:text="If else"
+                android:textAlignment="viewEnd"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView6"
+                style="@style/menu_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/text_menu_background"
+                android:elevation="2dp"
+                android:padding="3dp"
                 android:text="Print"
+                android:textAlignment="viewEnd"
                 android:textStyle="bold" />
 
 
@@ -170,6 +182,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="4dp"
             android:orientation="vertical">
+
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/btnVariables"
@@ -198,6 +211,16 @@
                 app:borderWidth="0dp"
                 app:srcCompat="@drawable/ic_baseline_redo_24"
                 tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btnIf"
+                style="@style/menu_buttons"
+                android:backgroundTint="@color/ifElseBlockColorMenu"
+                android:clickable="true"
+                app:borderWidth="0dp"
+                app:srcCompat="@drawable/ic_baseline_redo_24"
+                tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/btnPrint"

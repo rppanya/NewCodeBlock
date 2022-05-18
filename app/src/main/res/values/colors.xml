@@ -20,6 +20,7 @@
     <color name="valBlockColorMenu">#F86AAB</color>
     <color name="printBlockColorMenu">#17FB6C</color>
     <color name="ifBlockColorMenu">#FF9800</color>
+    <color name="ifElseBlockColorMenu">#E91E63</color>
     <color name="red">#FF6F6F</color>
 
 </resources>
