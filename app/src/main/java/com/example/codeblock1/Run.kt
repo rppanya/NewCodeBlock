@@ -142,9 +142,6 @@ class Run {
                 "VAR" -> {
                     val nameCopy: String = varBlocksList[i].name
                     val valueCopy: String = varBlocksList[i].value
-/*
-                    var varAvailable = true
-*/
                     var indexIfVarNotAvailable = 0
 
                     if (nameCopy != "") {
@@ -204,26 +201,23 @@ class Run {
                             nameCopy = nameCopy.replace(it.value, number)
                         }
                     }
-                    try {
-                        val condition = InterpreterForInequalities(nameCopy)
-                        if (!condition.interpretInequality()) {
-                            var skip = 0
-                            for (j in i + 1 until varBlocksList.size) {
-                                if (varBlocksList[j].blockType != "END_IF") {
-                                    skip++
-                                } else {
-                                    break
-                                }
+                    val condition = InterpreterForInequalities(nameCopy)
+                    if (!condition.interpretInequality()) {
+                        var skip = 0
+                        for (j in i + 1 until varBlocksList.size) {
+                            if (varBlocksList[j].blockType != "END_IF") {
+                                skip++
+                            } else {
+                                break
                             }
-                            i += (skip + 1)
                         }
-                    } catch (e: Exception){
-                        console.consoleOutput.text = "Incorrect IF value"
+                        i += (skip + 1)
                     }
                 }
                 "END_IF" -> {
                     if (stackForIf.isEmpty()) {
                         console.consoleOutput.text = "Invalid IF operator brackets"
+                        return
                     } else {
                         for (j in i - 1 downTo stackForIf.last()) {
                             if (varBlocksList[j].blockType == "VAR") {
@@ -242,11 +236,33 @@ class Run {
                 }
                 "WHILE" -> {
                     stackForWhile.add(i)
-
+                    var nameCopy: String = varBlocksList[i].name
+                    if (isVariableInString(varBlocksList[i].name)) {
+                        var pattern: Sequence<MatchResult> =
+                            Regex("""([a-z]|[A-Z])[\w\d_]*""".trimIndent()).findAll(input = varBlocksList[i].name)
+                        pattern = pattern.sortedBy { -it.value.length }
+                        pattern.forEach {
+                            val number = convertVarToNum(it.value, variables)
+                            nameCopy = nameCopy.replace(it.value, number)
+                        }
+                    }
+                    val condition = InterpreterForInequalities(nameCopy)
+                    if (!condition.interpretInequality()) {
+                        var skip = 0
+                        for (j in i + 1 until varBlocksList.size) {
+                            if (varBlocksList[j].blockType != "END_WHILE") {
+                                skip++
+                            } else {
+                                break
+                            }
+                        }
+                        i += (skip + 1)
+                    }
                 }
                 "END_WHILE" -> {
                     if (stackForWhile.isEmpty()) {
                         console.consoleOutput.text = "Invalid WHILE operator brackets"
+                        return
                     } else {
 
                         var nameCopy: String = varBlocksList[stackForWhile.last()].name
