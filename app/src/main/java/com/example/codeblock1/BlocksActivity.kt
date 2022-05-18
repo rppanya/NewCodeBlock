@@ -62,6 +62,7 @@ class BlocksActivity : Activity() {
                 binding.addButton.startAnimation(rotateOpen)
                 binding.menu.visibility = View.VISIBLE
                 binding.btnVariables.startAnimation(fromBottom)
+                binding.btnIf.startAnimation(fromBottom)
                 binding.btnIfElse.startAnimation(fromBottom)
                 binding.btnWhile.startAnimation(fromBottom)
                 binding.btnPrint.startAnimation(fromBottom)
@@ -70,6 +71,7 @@ class BlocksActivity : Activity() {
                 binding.textView3.startAnimation(fromBottom)
                 binding.textView4.startAnimation(fromBottom)
                 binding.textView5.startAnimation(fromBottom)
+                binding.textView6.startAnimation(fromBottom)
                 clicked = true
             } else {
                 binding.addButton.startAnimation(rotateClose)
