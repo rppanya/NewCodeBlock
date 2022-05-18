@@ -231,28 +231,47 @@ class Run {
                     val condition = InterpreterForInequalities(nameCopy)
                     if (!condition.interpretInequality()) {
                         var skip = 0
+                        var counter = 0
+
                         for (j in i + 1 until varBlocksList.size) {
-                            if (varBlocksList[j].blockType != "END_IF") {
-                                skip++
-                            } else {
+                            if (varBlocksList[j].blockType == "IF") {
+                                counter++
+                            } else if (varBlocksList[j].blockType == "ELSE" || varBlocksList[j].blockType == "END_IF" && counter-- == 0) {
                                 break
+                            } else {
+                                skip++
                             }
                         }
                         i += (skip + 1)
-                    } else {
-                        if (varBlocksList[i - 1].blockType == "ELSE") {
-                            var skip = 0
-                            for (j in i until varBlocksList.size) {
-                                if (varBlocksList[j].blockType != "END_ELSE") {
-                                    skip++
-                                } else {
-                                    break
-                                }
-                            }
-                            i += (skip + 1)
-                        }
                     }
                 }
+                "ELSE" -> {
+                    var counterIfs = 0
+                    for (j in i-1 downTo 0) {
+                        if (varBlocksList[j].blockType == "END_IF") {
+                            counterIfs++
+                        } else if (varBlocksList[j].blockType == "IF" && counterIfs-- == 0) {
+                            val condition = InterpreterForInequalities(varBlocksList[j].name)
+                            if (condition.interpretInequality()) {
+                                var skip = 0
+                                var counter = 0
+
+                                for (k in i + 1 until varBlocksList.size) {
+                                    if (varBlocksList[k].blockType == "IF") {
+                                        counter++
+                                    } else if (varBlocksList[k].blockType == "END_IF" && counter-- == 0) {
+                                        break
+                                    } else {
+                                        skip++
+                                    }
+                                }
+                                i += (skip + 1)
+                            }
+                        }
+                    }
+
+                }
+
                 "END_IF" -> {
                     if (stackForIf.isEmpty()) {
                         console.consoleOutput.text = "Invalid IF operator brackets"

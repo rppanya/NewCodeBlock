@@ -77,14 +77,6 @@ class BlocksActivity : Activity() {
                 binding.addButton.startAnimation(rotateClose)
 
                 clicked = false
-                /*binding.btnVariables.startAnimation(toBottom)
-                binding.btnIfElse.startAnimation(toBottom)
-                binding.btnPrint.startAnimation(toBottom)
-
-                binding.textView2.startAnimation(toBottom)
-                binding.textView4.startAnimation(toBottom)
-                binding.textView5.startAnimation(toBottom)*/
-
 
                 binding.menu.visibility = View.GONE
             }
@@ -148,12 +140,22 @@ class BlocksActivity : Activity() {
                 adapter.addVarBlock(block)
             }
 
-            binding.btnIfElse.setOnClickListener{
+            binding.btnIf.setOnClickListener{
                 var block = VarBlock("", "", "IF")
                 adapter.addVarBlock(block)
                 block = VarBlock("", "", "END_IF")
                 adapter.addVarBlock(block)
             }
+
+            binding.btnIfElse.setOnClickListener{
+                var block = VarBlock("", "", "IF")
+                adapter.addVarBlock(block)
+                block = VarBlock("", "", "ELSE")
+                adapter.addVarBlock(block)
+                block = VarBlock("", "", "END_IF")
+                adapter.addVarBlock(block)
+            }
+
             binding.btnWhile.setOnClickListener{
                 var block = VarBlock("", "", "WHILE")
                 adapter.addVarBlock(block)

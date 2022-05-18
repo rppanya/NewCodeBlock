@@ -204,7 +204,7 @@
 
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/btnIfElse"
+                android:id="@+id/btnIf"
                 style="@style/menu_buttons"
                 android:backgroundTint="@color/ifBlockColorMenu"
                 android:clickable="true"
@@ -213,7 +213,7 @@
                 tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/btnIf"
+                android:id="@+id/btnIfElse"
                 style="@style/menu_buttons"
                 android:backgroundTint="@color/ifElseBlockColorMenu"
                 android:clickable="true"

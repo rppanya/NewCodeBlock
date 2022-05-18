@@ -9,6 +9,7 @@
         android:id="@+id/blockForVariable"
         android:layout_width="331dp"
         android:layout_height="50dp"
+        android:background="@color/ifBlockColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -17,55 +18,44 @@
         tools:ignore="MissingConstraints"
         android:layout_margin="5dp">
 
+        <TextView
+            android:id="@+id/nameOfBlock"
+            android:layout_width="38dp"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            tools:ignore="RelativeOverlap" />
 
-        <RelativeLayout
-            android:id="@+id/emptyField"
+        <EditText
+            android:id="@+id/valueOfVariable"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@color/ifBlockColor">
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Name"
+            android:visibility="gone" />
 
-            <TextView
-                android:id="@+id/nameOfBlock"
-                android:layout_width="38dp"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:visibility="invisible"
-                tools:ignore="RelativeOverlap" />
-
-            <EditText
-                android:id="@+id/nameOfVariable"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:visibility="invisible"
-                tools:ignore="RelativeOverlap" />
-
-            <EditText
-                android:id="@+id/valueOfVariable"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:visibility="invisible"
-                tools:ignore="RelativeOverlap" />
-        </RelativeLayout>
+        <EditText
+            android:id="@+id/nameOfVariable"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:inputType="textPersonName"
+            android:visibility="gone" />
 
         <RelativeLayout
+            android:id="@+id/typeLayout"
             android:layout_width="38dp"
             android:layout_height="match_parent"
-            android:layout_toEndOf="@+id/emptyField"
+            android:layout_alignParentStart="true"
             android:background="@color/blockTypeColor">
 
             <TextView
-                android:id="@+id/bracket"
+                android:id="@+id/bracketClose"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
+                android:layout_marginHorizontal="15dp"
                 android:layout_marginVertical="7dp"
                 android:text="}"
                 android:textSize="25sp"
@@ -73,89 +63,44 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:layout_width="243dp"
+            android:id="@+id/bracket"
+            android:layout_width="38dp"
             android:layout_height="match_parent"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="87dp"
-            android:layout_marginTop="0dp"
-            android:layout_marginEnd="1dp"
-            android:layout_marginBottom="0dp"
-            android:background="@color/ifBlockColor">
+            android:layout_marginEnd="0dp"
+            android:layout_toEndOf="@+id/nameOfVariable"
+            android:background="@color/blockTypeColor">
 
-            <EditText
-                android:id="@+id/valueOfVariable2"
+            <TextView
+                android:id="@+id/bracketOpen"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Name"
-                android:visibility="gone" />
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginVertical="7dp"
+                android:text="{"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
 
-            <EditText
-                android:id="@+id/nameOfVariable2"
-                android:layout_width="209dp"
-                android:layout_height="48dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginStart="87dp"
-                android:layout_marginEnd="35dp"
-                android:ems="10"
-                android:hint="Condition"
-                android:inputType="textPersonName"
-                android:visibility="visible" />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_marginHorizontal="70dp"
+            android:layout_toStartOf="@+id/bracket"
+            android:layout_toEndOf="@+id/typeLayout"
+            android:background="@color/blockTypeColor"
+            android:gravity="center">
 
-            <RelativeLayout
-                android:id="@+id/typeLayout"
-                android:layout_width="82dp"
-                android:layout_height="82dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="0dp"
-                android:layout_marginBottom="0dp"
-                android:background="@color/blockTypeColor">
-
-                <TextView
-                    android:id="@+id/nameOfBlock2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
-                    android:gravity="center"
-                    android:text="ELSE"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="28dp"
-                android:layout_height="match_parent"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="-29dp"
-                android:layout_marginEnd="0dp"
-                android:layout_toEndOf="@+id/nameOfVariable2"
-                android:background="@color/blockTypeColor">
-
-                <TextView
-                    android:id="@+id/bracket2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_marginVertical="7dp"
-                    android:text="{"
-                    android:textSize="25sp"
-                    android:textStyle="bold" />
-            </RelativeLayout>
-
-
+            <TextView
+                android:id="@+id/Else"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginVertical="7dp"
+                android:text="Else"
+                android:textSize="18sp"
+                android:textStyle="bold" />
         </RelativeLayout>
 
 

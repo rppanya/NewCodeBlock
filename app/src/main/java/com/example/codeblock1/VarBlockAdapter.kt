@@ -54,6 +54,7 @@ class VarBlockAdapter : RecyclerView.Adapter<VarBlocksHolder>() { //private val 
             "END_IF" -> R.layout.end_if_block
             "WHILE" -> R.layout.while_block
             "END_WHILE" -> R.layout.end_while_block
+            "ELSE" -> R.layout.end_if_plus_else_block
             else -> R.layout.variables_block
         }
         return viewType;
@@ -81,7 +82,7 @@ class VarBlockAdapter : RecyclerView.Adapter<VarBlocksHolder>() { //private val 
             for (i in position+1 until varBlocksList.size) {
                 if (varBlocksList[i].blockType == "IF") {
                     counter++
-                } else if (varBlocksList[i].blockType == "END_IF" && counter-- == 0) {
+                } else if ((varBlocksList[i].blockType == "END_IF") && counter-- == 0) {
                     varBlocksList.removeAt(position)
                     varBlocksList.removeAt(i-1)
                     notifyItemRemoved(position)
@@ -92,7 +93,7 @@ class VarBlockAdapter : RecyclerView.Adapter<VarBlocksHolder>() { //private val 
         } else if (varBlocksList[position].blockType == "END_IF") {
             var counter = 0
             for (i in position-1 downTo 0) {
-                if (varBlocksList[i].blockType == "END_IF") {
+                if (varBlocksList[i].blockType == "END_IF" ) {
                     counter++
                 } else if (varBlocksList[i].blockType == "IF" && counter-- == 0) {
                     varBlocksList.removeAt(i)
