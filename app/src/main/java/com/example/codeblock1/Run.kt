@@ -1,7 +1,6 @@
 package com.example.codeblock1
 
 import android.annotation.SuppressLint
-import android.util.Log
 import com.example.codeblock1.databinding.ConsolePageBinding
 
 class Run {
@@ -9,6 +8,23 @@ class Run {
     private val stackForIf = ArrayList<Int>()
     private val stackForWhile = ArrayList<Int>()
 
+
+    private fun variablesValidness(varStr: String, varBlocksList: ArrayList<VarBlock>, index: Int): String{
+        val variablePattern = Regex("""([a-z]|[A-Z])[\w\d_]*""".trimIndent()).findAll(input = varStr)
+        variablePattern.forEach { variable ->
+            var varInd: Int = -1
+            for(i in 0 until varBlocksList.size){
+                if(varBlocksList[i].name == variable.value && varBlocksList[i].blockType == "VAR"){
+                    varInd = i
+                    break
+                }
+            }
+            if(varInd > index || varInd == -1){
+                return variable.value
+            }
+        }
+        return "-1"
+    }
 
     private fun convertVarToNum(varName: String, variables: ArrayList<VarValue>): String{
         variables.forEach { block ->
@@ -47,48 +63,43 @@ class Run {
                     }
 
                     //value field: variable check
-                    val variablePattern = Regex("""([a-z]|[A-Z])[\w\d_]*""".trimIndent()).findAll(input = block.value)
-                    variablePattern.forEach {
-                        var flag = false
-                        varBlocksList.forEach { bl ->
-                            if(bl.name == it.value){
-                                flag = true
-                            }
-                        }
-                        if(!flag){
-                            return "Incorrect name of value: ${block.value}"
-                        }
+                    val incorrect = variablesValidness(block.value, varBlocksList, varBlocksList.indexOf(block))
+                    if(incorrect != "-1"){
+                        return "Can't find variable: $incorrect in VAR"
                     }
 
                     //value field: signs check
-                    val incorrectSigns = Regex(pattern = """[-+*/%][-+*/%]""".trimIndent())
+                    val incorrectSigns = Regex(pattern = """[-+*/%][-+*/%]+""".trimIndent())
                     if(incorrectSigns.containsMatchIn(block.value)){
                         return "Incorrect arithmetic expression: ${block.value}"
                     }
                 }
 
                 "PRINT"->{
-                    val variablePattern = Regex("""([a-z]|[A-Z])[\w\d_]*""".trimIndent()).findAll(input = block.name)
-                    variablePattern.forEach { variable ->
-                        var varInd: Int = -1
-                        for(i in 0 until varBlocksList.size){
-                            if(varBlocksList[i].name == variable.value && varBlocksList[i].blockType == "VAR"){
-                                varInd = i
-                                break
-                            }
-                        }
-                        if(varInd > varBlocksList.indexOf(block) || varInd == -1){
-                            return "Can't find variable: ${variable.value}"
-                        }
+                    val incorrect = variablesValidness(block.name, varBlocksList, varBlocksList.indexOf(block))
+                    if(incorrect != "-1"){
+                        return "Can't find variable $incorrect in PRINT"
                     }
                 }
 
 
                 "IF"->{
-/*
-                    val ifPattern = Regex("""((([a-z]|[A-Z])[\w\d_]*)|(\d+))(>|<|>=|<=|==|!=)((([a-z]|[A-Z])[\w\d_]*)|(\d+))""".trimIndent()).findAll(input = block.name)
-*/
+                    val ifPattern = Regex("""((((([a-z]|[A-Z])[\w\d_]*)|(\d+)))([+\-/*%](((([a-z]|[A-Z])[\w\d_]*)|(\d+))))*)(>|<|>=|<=|==|!=)((((([a-z]|[A-Z])[\w\d_]*)|(\d+)))([+\-\/*%](((([a-z]|[A-Z])[\w\d_]*)|(\d+))))*)""".trimIndent()).findAll(input = block.name)
+                    var flag = false
+                    ifPattern.forEach {
+                        flag = true
+                        if(it.value.length != block.name.length){
+                            return "Incorrect IF expression"
+                        }
+                    }
+                    if(!flag){
+                        return "Incorrect IF expression"
+                    }
 
+                    val incorrect = variablesValidness(block.name, varBlocksList, varBlocksList.indexOf(block))
+                    if(incorrect != "-1"){
+                        return "Can't find variable $incorrect in IF"
+                    }
                 }
             }
         }
@@ -103,6 +114,7 @@ class Run {
         }
         return -1
     }
+
     private fun varBeforeIf(VarBlocksList: ArrayList<VarBlock>, start: Int, finish: Int, name: String) : Boolean {
         for (i in finish downTo start) {
             if (VarBlocksList[i].blockType == "VAR" && VarBlocksList[i].name == name) {

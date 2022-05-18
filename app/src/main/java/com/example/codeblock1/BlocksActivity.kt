@@ -20,7 +20,6 @@ import com.example.codeblock1.databinding.ConsolePageBinding
 private var canCallConsole = true
 
 
-
 class BlocksActivity : Activity() {
     private var clicked = false
     lateinit var binding: com.example.codeblock1.databinding.ActivityBlocksBinding
