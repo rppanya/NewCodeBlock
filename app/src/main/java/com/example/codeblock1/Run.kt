@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import com.example.codeblock1.databinding.ConsolePageBinding
 
 class Run {
+
     private val variables = ArrayList<VarValue>()
     private val stackForIf = ArrayList<Int>()
     private val stackForWhile = ArrayList<Int>()
@@ -48,7 +49,7 @@ class Run {
     }
 
     private fun isVariableInString(s: String): Boolean {
-        val pattern = Regex(pattern = """[^\d]""")
+        val pattern = Regex(pattern = """[^\d<>(==)(!=)(<=)(>=)]""")
         return pattern.containsMatchIn(s)
     }
 
@@ -101,6 +102,30 @@ class Run {
                         return "Can't find variable $incorrect in IF"
                     }
                 }
+                "WHILE"->{
+                    val ifPattern = Regex("""((((([a-z]|[A-Z])[\w\d_]*)|(\d+)))([+\-/*%](((([a-z]|[A-Z])[\w\d_]*)|(\d+))))*)(>|<|>=|<=|==|!=)((((([a-z]|[A-Z])[\w\d_]*)|(\d+)))([+\-\/*%](((([a-z]|[A-Z])[\w\d_]*)|(\d+))))*)""".trimIndent()).findAll(input = block.name)
+                    var flag = false
+
+                    if(!isVariableInString(block.name)) {
+                        return "Can't find variables in WHILE"
+                    }
+
+                    ifPattern.forEach {
+                        flag = true
+                        if(it.value.length != block.name.length){
+                            return "Incorrect WHILE expression"
+                        }
+                    }
+                    if(!flag){
+                        return "Incorrect WHILE expression"
+                    }
+
+                    val incorrect = variablesValidness(block.name, varBlocksList, varBlocksList.indexOf(block))
+                    if(incorrect != "-1"){
+                        return "Can't find variable $incorrect in WHILE"
+                    }
+
+                }
             }
         }
         return "Correct"
@@ -126,6 +151,8 @@ class Run {
 
     @SuppressLint("SetTextI18n")
     fun run(varBlocksList: ArrayList<VarBlock>, console: ConsolePageBinding){
+
+        var counterWhile = 0
         stackForIf.clear()
         variables.clear()
         val correctness = isDebugValid(varBlocksList)
@@ -212,6 +239,18 @@ class Run {
                             }
                         }
                         i += (skip + 1)
+                    } else {
+                        if (varBlocksList[i - 1].blockType == "ELSE") {
+                            var skip = 0
+                            for (j in i until varBlocksList.size) {
+                                if (varBlocksList[j].blockType != "END_ELSE") {
+                                    skip++
+                                } else {
+                                    break
+                                }
+                            }
+                            i += (skip + 1)
+                        }
                     }
                 }
                 "END_IF" -> {
@@ -235,6 +274,7 @@ class Run {
                     }
                 }
                 "WHILE" -> {
+                    counterWhile++
                     stackForWhile.add(i)
                     var nameCopy: String = varBlocksList[i].name
                     if (isVariableInString(varBlocksList[i].name)) {
@@ -257,6 +297,10 @@ class Run {
                             }
                         }
                         i += (skip + 1)
+                    }
+                    if (counterWhile > 500) {
+                        console.consoleOutput.text = "Invalid WHILE"
+                        return
                     }
                 }
                 "END_WHILE" -> {
@@ -291,7 +335,7 @@ class Run {
             }
             i++
         }
-        console.consoleOutput.text = console.consoleOutput.text.toString() + variables.toString()
+        //console.consoleOutput.text = console.consoleOutput.text.toString() + variables.toString()
     }
 
 }

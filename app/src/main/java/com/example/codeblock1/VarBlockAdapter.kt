@@ -166,10 +166,7 @@ class VarBlockAdapter : RecyclerView.Adapter<VarBlocksHolder>() { //private val 
         }
 
 
-        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-        }
-
-
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {}
 
     }
 }
