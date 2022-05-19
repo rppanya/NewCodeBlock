@@ -19,9 +19,14 @@ class MainActivity : AppCompatActivity() {
             val current = Intent(this@MainActivity, BlocksActivity::class.java)
             startActivity(current)
         }
+        binding.btnInstructions.setOnClickListener {
+            val current = Intent(this@MainActivity, InstructionsActivity::class.java)
+            startActivity(current)
+        }
         binding.btnExit.setOnClickListener {
             finishAffinity()
         }
+
     }
 
 }

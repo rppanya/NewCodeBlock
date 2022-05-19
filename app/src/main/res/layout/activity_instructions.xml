@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/constraint"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BlocksActivity"
+    >
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="-143dp"
+        tools:layout_editor_absoluteY="-16dp">
+        <TableLayout
+            android:id="@+id/ButtonsTable"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="62dp"
+                android:background="@color/light_blue">
+
+                <Button
+                    android:id="@+id/backButton"
+                    android:layout_width="60dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="left"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_marginTop="7dp"
+                    android:background="@drawable/ic_baseline_arrow_back_ios_24"
+                    android:backgroundTint="@color/white"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+                <Button
+                    android:id="@+id/btnTranslate"
+                    style="@style/custom_buttons"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/ic_baseline_translate_24"
+                    android:backgroundTint="@color/white"
+                    android:focusable="false"
+                    tools:ignore="SpeakableTextPresentCheck" />
+            </RelativeLayout>
+        </TableLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/rus_instructions" />
+        </ScrollView>
+
+
+    </LinearLayout>
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

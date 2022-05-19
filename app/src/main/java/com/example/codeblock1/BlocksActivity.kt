@@ -5,7 +5,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.Animation
@@ -22,7 +21,7 @@ private var canCallConsole = true
 
 class BlocksActivity : Activity() {
     private var clicked = false
-    lateinit var binding: com.example.codeblock1.databinding.ActivityBlocksBinding
+    lateinit var binding: ActivityBlocksBinding
     private val adapter = VarBlockAdapter()
 
     @SuppressLint("InflateParams", "ClickableViewAccessibility")

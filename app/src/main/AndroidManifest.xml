@@ -20,6 +20,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".BlocksActivity" />
+        <activity android:name=".InstructionsActivity" />
     </application>
 
 </manifest>

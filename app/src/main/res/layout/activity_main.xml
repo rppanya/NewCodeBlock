@@ -28,22 +28,34 @@
         android:background="@drawable/rounded_buttons"
         android:text="Begin"
         style="@style/custom_buttons"
-        app:layout_constraintBottom_toTopOf="@+id/btnExit"
+        app:layout_constraintBottom_toTopOf="@+id/btnInstructions"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/btnExit"
+        android:id="@+id/btnInstructions"
         android:layout_width="280dp"
         android:layout_height="50dp"
         android:layout_marginBottom="172dp"
         android:background="@drawable/rounded_buttons"
-        android:text="Exit"
+        android:text="Instructions"
         style="@style/custom_buttons"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <Button
+        android:id="@+id/btnExit"
+        style="@style/custom_buttons"
+        android:layout_width="280dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/rounded_buttons"
+        android:text="Exit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnInstructions" />
 </androidx.constraintlayout.widget.ConstraintLayout>
