@@ -14,13 +14,15 @@ class Run {
         val variablePattern = Regex("""([a-z]|[A-Z])[\w\d_]*""".trimIndent()).findAll(input = varStr)
         variablePattern.forEach { variable ->
             var varInd: Int = -1
+            var varValue = ""
             for(i in 0 until varBlocksList.size){
                 if(varBlocksList[i].name == variable.value && varBlocksList[i].blockType == "VAR"){
                     varInd = i
+                    varValue = varBlocksList[i].value
                     break
                 }
             }
-            if(varInd > index || varInd == -1){
+            if(varInd > index || varInd == -1 || varValue == ""){
                 return variable.value
             }
         }
@@ -251,7 +253,17 @@ class Run {
                         if (varBlocksList[j].blockType == "END_IF") {
                             counterIfs++
                         } else if (varBlocksList[j].blockType == "IF" && counterIfs-- == 0) {
-                            val condition = InterpreterForInequalities(varBlocksList[j].name)
+                            var nameCopy: String = varBlocksList[j].name
+                            if (isVariableInString(varBlocksList[j].name)) {
+                                var pattern: Sequence<MatchResult> =
+                                    Regex("""([a-z]|[A-Z])[\w\d_]*""".trimIndent()).findAll(input = varBlocksList[j].name)
+                                pattern = pattern.sortedBy { -it.value.length }
+                                pattern.forEach {
+                                    val number = convertVarToNum(it.value, variables)
+                                    nameCopy = nameCopy.replace(it.value, number)
+                                }
+                            }
+                            val condition = InterpreterForInequalities(nameCopy)
                             if (condition.interpretInequality()) {
                                 var skip = 0
                                 var counter = 0
@@ -354,7 +366,6 @@ class Run {
             }
             i++
         }
-        //console.consoleOutput.text = console.consoleOutput.text.toString() + variables.toString()
     }
 
 }
