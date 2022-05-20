@@ -19,7 +19,12 @@ class InstructionsActivity : Activity() {
         }
 
         binding.btnTranslate.setOnClickListener {
-
+            if (binding.textInstruction.text == getText(R.string.rus_instructions)) {
+                binding.textInstruction.text = getText(R.string.eng_instructions)
+            }
+            else {
+                binding.textInstruction.text = getText(R.string.rus_instructions)
+            }
         }
     }
 

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.codeblock1.databinding.ActivityBlocksBinding
 import com.example.codeblock1.databinding.ConsolePageBinding
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
 private var canCallConsole = true
@@ -110,6 +112,7 @@ class BlocksActivity : Activity() {
             val current = Intent(this@BlocksActivity, MainActivity::class.java)
             startActivity(current)
         }
+
     }
 
     private fun init(context: Context) {
