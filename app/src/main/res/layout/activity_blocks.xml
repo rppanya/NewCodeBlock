@@ -190,7 +190,7 @@
                 android:backgroundTint="@color/valBlockColorMenu"
                 android:clickable="true"
                 app:borderWidth="0dp"
-                app:srcCompat="@drawable/ic_baseline_turned_in_not_24"
+                app:srcCompat="@drawable/ic_baseline_fiber_new_24"
                 tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -199,7 +199,7 @@
                 android:backgroundTint="@color/whileBlockColorMenu"
                 android:clickable="true"
                 app:borderWidth="0dp"
-                app:srcCompat="@drawable/ic_baseline_turned_in_not_24"
+                app:srcCompat="@drawable/ic_baseline_wrap_text_24"
                 tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
 
@@ -218,7 +218,7 @@
                 android:backgroundTint="@color/ifElseBlockColorMenu"
                 android:clickable="true"
                 app:borderWidth="0dp"
-                app:srcCompat="@drawable/ic_baseline_redo_24"
+                app:srcCompat="@drawable/ic_baseline_low_priority_24"
                 tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
 
@@ -228,7 +228,7 @@
                 android:backgroundTint="@color/printBlockColorMenu"
                 android:clickable="true"
                 app:borderWidth="0dp"
-                app:srcCompat="@drawable/ic_baseline_comment_24"
+                app:srcCompat="@drawable/ic_baseline_featured_play_list_24"
                 tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
         </LinearLayout>

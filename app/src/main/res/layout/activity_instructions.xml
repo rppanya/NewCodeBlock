@@ -40,8 +40,8 @@
                 <Button
                     android:id="@+id/btnTranslate"
                     style="@style/custom_buttons"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:layout_alignParentRight="true"
                     android:background="@drawable/ic_baseline_translate_24"
                     android:backgroundTint="@color/white"
@@ -55,7 +55,8 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/textInstruction"
+                android:padding="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/rus_instructions" />
