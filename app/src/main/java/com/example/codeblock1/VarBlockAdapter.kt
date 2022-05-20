@@ -83,11 +83,33 @@ class VarBlockAdapter : RecyclerView.Adapter<VarBlocksHolder>() { //private val 
                 if (varBlocksList[i].blockType == "IF") {
                     counter++
                 } else if ((varBlocksList[i].blockType == "END_IF") && counter-- == 0) {
-                    varBlocksList.removeAt(position)
-                    varBlocksList.removeAt(i-1)
-                    notifyItemRemoved(position)
-                    notifyItemRemoved(i-1)
-                    break
+                    var elseIndex = -1
+                    counter = 0
+                    for (j in position+1 until i) {
+                        if (varBlocksList[j].blockType == "IF") {
+                            counter++
+                        }
+                        if (varBlocksList[j].blockType == "END_IF") counter--
+                        if (varBlocksList[j].blockType == "ELSE" && counter == 0) {
+                            elseIndex = j
+                            break
+                        }
+                    }
+                    if (elseIndex!=-1) {
+                        varBlocksList.removeAt(elseIndex)
+                        varBlocksList.removeAt(position)
+                        varBlocksList.removeAt(i - 2)
+                        notifyItemRemoved(elseIndex)
+                        notifyItemRemoved(position)
+                        notifyItemRemoved(i - 2)
+                        break
+                    } else {
+                        varBlocksList.removeAt(position)
+                        varBlocksList.removeAt(i-1)
+                        notifyItemRemoved(position)
+                        notifyItemRemoved(i-1)
+                        break
+                    }
                 }
             }
         } else if (varBlocksList[position].blockType == "END_IF") {
@@ -96,11 +118,34 @@ class VarBlockAdapter : RecyclerView.Adapter<VarBlocksHolder>() { //private val 
                 if (varBlocksList[i].blockType == "END_IF" ) {
                     counter++
                 } else if (varBlocksList[i].blockType == "IF" && counter-- == 0) {
-                    varBlocksList.removeAt(i)
-                    varBlocksList.removeAt(position-1)
-                    notifyItemRemoved(i)
-                    notifyItemRemoved(position-1)
-                    break
+                    var elseIndex = -1
+                    counter = 0
+                    for (j in position-1 downTo i+1) {
+                        if (varBlocksList[j].blockType == "END_IF") {
+                            counter++
+                        }
+                        if (varBlocksList[j].blockType == "IF") counter--
+                        if (varBlocksList[j].blockType == "ELSE" && counter == 0) {
+                            elseIndex = j
+                            break
+                        }
+                    }
+                    if (elseIndex!=-1) {
+                        varBlocksList.removeAt(elseIndex)
+                        varBlocksList.removeAt(i)
+                        varBlocksList.removeAt(position - 2)
+                        notifyItemRemoved(elseIndex)
+                        notifyItemRemoved(i)
+                        notifyItemRemoved(position - 2)
+                        break
+                    } else {
+                        varBlocksList.removeAt(i)
+                        varBlocksList.removeAt(position-1)
+                        notifyItemRemoved(i)
+                        notifyItemRemoved(position-1)
+                        break
+                    }
+
                 }
             }
         } else if (varBlocksList[position].blockType == "WHILE") {
