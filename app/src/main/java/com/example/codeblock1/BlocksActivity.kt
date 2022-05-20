@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,8 +13,6 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.codeblock1.databinding.ActivityBlocksBinding
-import com.example.codeblock1.databinding.ConsolePageBinding
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
 private var canCallConsole = true
@@ -24,7 +21,7 @@ private var canCallConsole = true
 class BlocksActivity : Activity() {
     private var clicked = false
     lateinit var binding: ActivityBlocksBinding
-    private val adapter = VarBlockAdapter()
+    private val adapter = BlockAdapter()
 
     @SuppressLint("InflateParams", "ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -124,7 +121,7 @@ class BlocksActivity : Activity() {
 
             val swipeHandler = object: SwipeToDelete(context) {
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                    val swipeAdapter = rcView.adapter as VarBlockAdapter
+                    val swipeAdapter = rcView.adapter as BlockAdapter
                     swipeAdapter.removeBlock(viewHolder.adapterPosition)
                 }
             }
@@ -132,36 +129,36 @@ class BlocksActivity : Activity() {
             itemTouchHelperSwipe.attachToRecyclerView(rcView)
 
             binding.btnVariables.setOnClickListener{
-                val block = VarBlock("", "", "VAR")
+                val block = Block("", "", "VAR")
                 adapter.addVarBlock(block)
 
             }
 
             binding.btnPrint.setOnClickListener{
-                val block = VarBlock("", "", "PRINT")
+                val block = Block("", "", "PRINT")
                 adapter.addVarBlock(block)
             }
 
             binding.btnIf.setOnClickListener{
-                var block = VarBlock("", "", "IF")
+                var block = Block("", "", "IF")
                 adapter.addVarBlock(block)
-                block = VarBlock("", "", "END_IF")
+                block = Block("", "", "END_IF")
                 adapter.addVarBlock(block)
             }
 
             binding.btnIfElse.setOnClickListener{
-                var block = VarBlock("", "", "IF")
+                var block = Block("", "", "IF")
                 adapter.addVarBlock(block)
-                block = VarBlock("", "", "ELSE")
+                block = Block("", "", "ELSE")
                 adapter.addVarBlock(block)
-                block = VarBlock("", "", "END_IF")
+                block = Block("", "", "END_IF")
                 adapter.addVarBlock(block)
             }
 
             binding.btnWhile.setOnClickListener{
-                var block = VarBlock("", "", "WHILE")
+                var block = Block("", "", "WHILE")
                 adapter.addVarBlock(block)
-                block = VarBlock("", "", "END_WHILE")
+                block = Block("", "", "END_WHILE")
                 adapter.addVarBlock(block)
             }
         }

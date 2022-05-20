@@ -10,25 +10,25 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.example.codeblock1.VarBlockAdapter.VarBlocksHolder
+import com.example.codeblock1.BlockAdapter.BlocksHolder
 import java.util.*
 import kotlin.collections.ArrayList
 
-class VarBlockAdapter : RecyclerView.Adapter<VarBlocksHolder>() { //private val testVal: test в конструктор
+class BlockAdapter : RecyclerView.Adapter<BlocksHolder>() { //private val testVal: test в конструктор
 
-    val varBlocksList = ArrayList<VarBlock>()
+    val blocksList = ArrayList<Block>()
 
-    inner class VarBlocksHolder(item: View):RecyclerView.ViewHolder(item){
-        val blockType : TextView = item.findViewById(R.id.nameOfBlock)
-        val value : EditText = item.findViewById(R.id.valueOfVariable)
-        val name : EditText = item.findViewById(R.id.nameOfVariable)
+    inner class BlocksHolder(item: View):RecyclerView.ViewHolder(item){
+        val blockType : TextView = item.findViewById(R.id.blockType)
+        val value : EditText = item.findViewById(R.id.value)
+        val name : EditText = item.findViewById(R.id.name)
 
         init {
             name.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
                 @SuppressLint("SetTextI18n")
                 override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                    varBlocksList[adapterPosition].name = s.toString()
+                    blocksList[adapterPosition].name = s.toString()
                 }
 
                 override fun afterTextChanged(s: Editable) {}
@@ -38,7 +38,7 @@ class VarBlockAdapter : RecyclerView.Adapter<VarBlocksHolder>() { //private val 
                 override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
                 @SuppressLint("SetTextI18n")
                 override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                    varBlocksList[adapterPosition].value = s.toString()
+                    blocksList[adapterPosition].value = s.toString()
                 }
 
                 override fun afterTextChanged(s: Editable) {}
@@ -48,7 +48,7 @@ class VarBlockAdapter : RecyclerView.Adapter<VarBlocksHolder>() { //private val 
     }
 
     override fun getItemViewType(position: Int): Int {
-        val viewType = when(varBlocksList[position].blockType){
+        val viewType = when(blocksList[position].blockType){
             "PRINT" -> R.layout.print_block
             "IF" -> R.layout.if_block
             "END_IF" -> R.layout.end_if_block
@@ -63,83 +63,83 @@ class VarBlockAdapter : RecyclerView.Adapter<VarBlocksHolder>() { //private val 
     override fun getItemId(position: Int): Long {
         return position.toLong()
     }
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VarBlocksHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BlocksHolder {
         val view = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
-        return VarBlocksHolder(view)
+        return BlocksHolder(view)
     }
 
-    override fun onBindViewHolder(holder: VarBlocksHolder, position: Int) {
-        holder.name.setText(varBlocksList[position].name)
-        holder.value.setText(varBlocksList[position].value)
-        holder.blockType.text = varBlocksList[position].blockType
+    override fun onBindViewHolder(holder: BlocksHolder, position: Int) {
+        holder.name.setText(blocksList[position].name)
+        holder.value.setText(blocksList[position].value)
+        holder.blockType.text = blocksList[position].blockType
     }
 
 
     fun removeBlock(position: Int){
-        if (varBlocksList[position].blockType == "IF") {
+        if (blocksList[position].blockType == "IF") {
             var counter = 0
-            for (i in position+1 until varBlocksList.size) {
-                if (varBlocksList[i].blockType == "IF") {
+            for (i in position+1 until blocksList.size) {
+                if (blocksList[i].blockType == "IF") {
                     counter++
-                } else if ((varBlocksList[i].blockType == "END_IF") && counter-- == 0) {
+                } else if ((blocksList[i].blockType == "END_IF") && counter-- == 0) {
                     var elseIndex = -1
                     counter = 0
                     for (j in position+1 until i) {
-                        if (varBlocksList[j].blockType == "IF") {
+                        if (blocksList[j].blockType == "IF") {
                             counter++
                         }
-                        if (varBlocksList[j].blockType == "END_IF") counter--
-                        if (varBlocksList[j].blockType == "ELSE" && counter == 0) {
+                        if (blocksList[j].blockType == "END_IF") counter--
+                        if (blocksList[j].blockType == "ELSE" && counter == 0) {
                             elseIndex = j
                             break
                         }
                     }
                     if (elseIndex!=-1) {
-                        varBlocksList.removeAt(elseIndex)
-                        varBlocksList.removeAt(position)
-                        varBlocksList.removeAt(i - 2)
+                        blocksList.removeAt(elseIndex)
+                        blocksList.removeAt(position)
+                        blocksList.removeAt(i - 2)
                         notifyItemRemoved(elseIndex)
                         notifyItemRemoved(position)
                         notifyItemRemoved(i - 2)
                         break
                     } else {
-                        varBlocksList.removeAt(position)
-                        varBlocksList.removeAt(i-1)
+                        blocksList.removeAt(position)
+                        blocksList.removeAt(i-1)
                         notifyItemRemoved(position)
                         notifyItemRemoved(i-1)
                         break
                     }
                 }
             }
-        } else if (varBlocksList[position].blockType == "END_IF") {
+        } else if (blocksList[position].blockType == "END_IF") {
             var counter = 0
             for (i in position-1 downTo 0) {
-                if (varBlocksList[i].blockType == "END_IF" ) {
+                if (blocksList[i].blockType == "END_IF" ) {
                     counter++
-                } else if (varBlocksList[i].blockType == "IF" && counter-- == 0) {
+                } else if (blocksList[i].blockType == "IF" && counter-- == 0) {
                     var elseIndex = -1
                     counter = 0
                     for (j in position-1 downTo i+1) {
-                        if (varBlocksList[j].blockType == "END_IF") {
+                        if (blocksList[j].blockType == "END_IF") {
                             counter++
                         }
-                        if (varBlocksList[j].blockType == "IF") counter--
-                        if (varBlocksList[j].blockType == "ELSE" && counter == 0) {
+                        if (blocksList[j].blockType == "IF") counter--
+                        if (blocksList[j].blockType == "ELSE" && counter == 0) {
                             elseIndex = j
                             break
                         }
                     }
                     if (elseIndex!=-1) {
-                        varBlocksList.removeAt(elseIndex)
-                        varBlocksList.removeAt(i)
-                        varBlocksList.removeAt(position - 2)
+                        blocksList.removeAt(elseIndex)
+                        blocksList.removeAt(i)
+                        blocksList.removeAt(position - 2)
                         notifyItemRemoved(elseIndex)
                         notifyItemRemoved(i)
                         notifyItemRemoved(position - 2)
                         break
                     } else {
-                        varBlocksList.removeAt(i)
-                        varBlocksList.removeAt(position-1)
+                        blocksList.removeAt(i)
+                        blocksList.removeAt(position-1)
                         notifyItemRemoved(i)
                         notifyItemRemoved(position-1)
                         break
@@ -147,49 +147,49 @@ class VarBlockAdapter : RecyclerView.Adapter<VarBlocksHolder>() { //private val 
 
                 }
             }
-        } else if (varBlocksList[position].blockType == "WHILE") {
+        } else if (blocksList[position].blockType == "WHILE") {
             var counter = 0
-            for (i in position+1 until varBlocksList.size) {
-                if (varBlocksList[i].blockType == "WHILE") {
+            for (i in position+1 until blocksList.size) {
+                if (blocksList[i].blockType == "WHILE") {
                     counter++
-                } else if (varBlocksList[i].blockType == "END_WHILE" && counter-- == 0) {
-                    varBlocksList.removeAt(position)
-                    varBlocksList.removeAt(i-1)
+                } else if (blocksList[i].blockType == "END_WHILE" && counter-- == 0) {
+                    blocksList.removeAt(position)
+                    blocksList.removeAt(i-1)
                     notifyItemRemoved(position)
                     notifyItemRemoved(i-1)
                     break
                 }
             }
-        } else if (varBlocksList[position].blockType == "END_WHILE") {
+        } else if (blocksList[position].blockType == "END_WHILE") {
             var counter = 0
             for (i in position-1 downTo 0) {
-                if (varBlocksList[i].blockType == "END_WHILE") {
+                if (blocksList[i].blockType == "END_WHILE") {
                     counter++
-                } else if (varBlocksList[i].blockType == "WHILE" && counter-- == 0) {
-                    varBlocksList.removeAt(i)
-                    varBlocksList.removeAt(position-1)
+                } else if (blocksList[i].blockType == "WHILE" && counter-- == 0) {
+                    blocksList.removeAt(i)
+                    blocksList.removeAt(position-1)
                     notifyItemRemoved(i)
                     notifyItemRemoved(position-1)
                     break
                 }
             }
         } else {
-            varBlocksList.removeAt(position)
+            blocksList.removeAt(position)
             notifyItemRemoved(position)
         }
     }
 
-    fun addVarBlock(block: VarBlock){
-        varBlocksList.add(block)
-        notifyItemInserted(varBlocksList.size)
+    fun addVarBlock(block: Block){
+        blocksList.add(block)
+        notifyItemInserted(blocksList.size)
     }
 
     override fun getItemCount(): Int {
-        return varBlocksList.size
+        return blocksList.size
     }
 
-    fun callVarBlocksList(): ArrayList<VarBlock>{
-        return varBlocksList
+    fun callVarBlocksList(): ArrayList<Block>{
+        return blocksList
     }
 
     /*fun callVariablesList(): ArrayList<VarValue>{
@@ -205,7 +205,7 @@ class VarBlockAdapter : RecyclerView.Adapter<VarBlocksHolder>() { //private val 
             val startPosition = viewHolder.adapterPosition
             val endPosition = target.adapterPosition
 
-            Collections.swap(varBlocksList, startPosition, endPosition)
+            Collections.swap(blocksList, startPosition, endPosition)
             recyclerView.adapter?.notifyItemMoved(startPosition, endPosition)
             return true
         }

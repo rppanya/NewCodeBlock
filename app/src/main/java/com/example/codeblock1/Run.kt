@@ -10,15 +10,15 @@ class Run {
     private val stackForWhile = ArrayList<Int>()
 
 
-    private fun variablesValidness(varStr: String, varBlocksList: ArrayList<VarBlock>, index: Int): String{
+    private fun variablesValidness(varStr: String, blocksList: ArrayList<Block>, index: Int): String{
         val variablePattern = Regex("""([a-z]|[A-Z])[\w\d_]*""".trimIndent()).findAll(input = varStr)
         variablePattern.forEach { variable ->
             var varInd: Int = -1
             var varValue = ""
-            for(i in 0 until varBlocksList.size){
-                if(varBlocksList[i].name == variable.value && varBlocksList[i].blockType == "VAR"){
+            for(i in 0 until blocksList.size){
+                if(blocksList[i].name == variable.value && blocksList[i].blockType == "VAR"){
                     varInd = i
-                    varValue = varBlocksList[i].value
+                    varValue = blocksList[i].value
                     break
                 }
             }
@@ -55,8 +55,8 @@ class Run {
         return pattern.containsMatchIn(s)
     }
 
-    private fun isDebugValid(varBlocksList: ArrayList<VarBlock>): String{
-        varBlocksList.forEach { block ->
+    private fun isDebugValid(blocksList: ArrayList<Block>): String{
+        blocksList.forEach { block ->
             when(block.blockType){
                 "VAR"->{
                     //name field
@@ -66,7 +66,7 @@ class Run {
                     }
 
                     //value field: variable check
-                    val incorrect = variablesValidness(block.value, varBlocksList, varBlocksList.indexOf(block))
+                    val incorrect = variablesValidness(block.value, blocksList, blocksList.indexOf(block))
                     if(incorrect != "-1"){
                         return "Can't find variable: $incorrect in VAR"
                     }
@@ -79,7 +79,7 @@ class Run {
                 }
 
                 "PRINT"->{
-                    val incorrect = variablesValidness(block.name, varBlocksList, varBlocksList.indexOf(block))
+                    val incorrect = variablesValidness(block.name, blocksList, blocksList.indexOf(block))
                     if(incorrect != "-1"){
                         return "Can't find variable $incorrect in PRINT"
                     }
@@ -99,7 +99,7 @@ class Run {
                         return "Incorrect IF expression"
                     }
 
-                    val incorrect = variablesValidness(block.name, varBlocksList, varBlocksList.indexOf(block))
+                    val incorrect = variablesValidness(block.name, blocksList, blocksList.indexOf(block))
                     if(incorrect != "-1"){
                         return "Can't find variable $incorrect in IF"
                     }
@@ -122,7 +122,7 @@ class Run {
                         return "Incorrect WHILE expression"
                     }
 
-                    val incorrect = variablesValidness(block.name, varBlocksList, varBlocksList.indexOf(block))
+                    val incorrect = variablesValidness(block.name, blocksList, blocksList.indexOf(block))
                     if(incorrect != "-1"){
                         return "Can't find variable $incorrect in WHILE"
                     }
@@ -142,9 +142,9 @@ class Run {
         return -1
     }
 
-    private fun varBeforeIf(VarBlocksList: ArrayList<VarBlock>, start: Int, finish: Int, name: String) : Boolean {
+    private fun varBeforeIf(blocksList: ArrayList<Block>, start: Int, finish: Int, name: String) : Boolean {
         for (i in finish downTo start) {
-            if (VarBlocksList[i].blockType == "VAR" && VarBlocksList[i].name == name) {
+            if (blocksList[i].blockType == "VAR" && blocksList[i].name == name) {
                 return true
             }
         }
@@ -152,12 +152,12 @@ class Run {
     }
 
     @SuppressLint("SetTextI18n")
-    fun run(varBlocksList: ArrayList<VarBlock>, console: ConsolePageBinding){
+    fun run(blocksList: ArrayList<Block>, console: ConsolePageBinding){
 
         var counterWhile = 0
         stackForIf.clear()
         variables.clear()
-        val correctness = isDebugValid(varBlocksList)
+        val correctness = isDebugValid(blocksList)
 
         if(correctness != "Correct"){
             console.consoleOutput.text = correctness
@@ -166,11 +166,11 @@ class Run {
 
         console.consoleOutput.text = ""
         var i = 0
-        while(i < varBlocksList.size) {
-            when (varBlocksList[i].blockType) {
+        while(i < blocksList.size) {
+            when (blocksList[i].blockType) {
                 "VAR" -> {
-                    val nameCopy: String = varBlocksList[i].name
-                    val valueCopy: String = varBlocksList[i].value
+                    val nameCopy: String = blocksList[i].name
+                    val valueCopy: String = blocksList[i].value
                     var indexIfVarNotAvailable = 0
 
                     if (nameCopy != "") {
@@ -179,17 +179,17 @@ class Run {
                         if (indexIfVarNotAvailable != -1) {
                             var flag = false
                             val varPattern: Sequence<MatchResult> =
-                                Regex("""([a-z]|[A-Z])[\w\d_]*""".trimIndent()).findAll(input = varBlocksList[i].value)
+                                Regex("""([a-z]|[A-Z])[\w\d_]*""".trimIndent()).findAll(input = blocksList[i].value)
                             varPattern.forEach {
                                 if(it.value == variables[indexIfVarNotAvailable].name){
                                     val number = convertVarToNum(it.value, variables)
-                                    variables[indexIfVarNotAvailable].value = varBlocksList[i].value
+                                    variables[indexIfVarNotAvailable].value = blocksList[i].value
                                     variables[indexIfVarNotAvailable].value = variables[indexIfVarNotAvailable].value.replace(it.value, number)
                                     flag = true
                                 }
                             }
                             if(!flag){
-                                variables[indexIfVarNotAvailable].value = varBlocksList[i].value
+                                variables[indexIfVarNotAvailable].value = blocksList[i].value
                             }
 
                         } else {
@@ -199,10 +199,10 @@ class Run {
 
                 }
                 "PRINT" -> {
-                    var nameCopy: String = varBlocksList[i].name
-                    if (isVariableInString(varBlocksList[i].name)) {
+                    var nameCopy: String = blocksList[i].name
+                    if (isVariableInString(blocksList[i].name)) {
                         var pattern: Sequence<MatchResult> =
-                            Regex("""([a-z]|[A-Z])[\w\d_]*""".trimIndent()).findAll(input = varBlocksList[i].name)
+                            Regex("""([a-z]|[A-Z])[\w\d_]*""".trimIndent()).findAll(input = blocksList[i].name)
                         pattern = pattern.sortedBy { -it.value.length }
                         pattern.forEach {
                             val number = convertVarToNum(it.value, variables)
@@ -220,10 +220,10 @@ class Run {
                 "IF" -> {
                     stackForIf.add(i)
 
-                    var nameCopy: String = varBlocksList[i].name
-                    if (isVariableInString(varBlocksList[i].name)) {
+                    var nameCopy: String = blocksList[i].name
+                    if (isVariableInString(blocksList[i].name)) {
                         var pattern: Sequence<MatchResult> =
-                            Regex("""([a-z]|[A-Z])[\w\d_]*""".trimIndent()).findAll(input = varBlocksList[i].name)
+                            Regex("""([a-z]|[A-Z])[\w\d_]*""".trimIndent()).findAll(input = blocksList[i].name)
                         pattern = pattern.sortedBy { -it.value.length }
                         pattern.forEach {
                             val number = convertVarToNum(it.value, variables)
@@ -235,10 +235,10 @@ class Run {
                         var skip = 0
                         var counter = 0
 
-                        for (j in i + 1 until varBlocksList.size) {
-                            if (varBlocksList[j].blockType == "IF") {
+                        for (j in i + 1 until blocksList.size) {
+                            if (blocksList[j].blockType == "IF") {
                                 counter++
-                            } else if (varBlocksList[j].blockType == "ELSE" || varBlocksList[j].blockType == "END_IF" && counter-- == 0) {
+                            } else if (blocksList[j].blockType == "ELSE" || blocksList[j].blockType == "END_IF" && counter-- == 0) {
                                 break
                             } else {
                                 skip++
@@ -250,13 +250,13 @@ class Run {
                 "ELSE" -> {
                     var counterIfs = 0
                     for (j in i-1 downTo 0) {
-                        if (varBlocksList[j].blockType == "END_IF") {
+                        if (blocksList[j].blockType == "END_IF") {
                             counterIfs++
-                        } else if (varBlocksList[j].blockType == "IF" && counterIfs-- == 0) {
-                            var nameCopy: String = varBlocksList[j].name
-                            if (isVariableInString(varBlocksList[j].name)) {
+                        } else if (blocksList[j].blockType == "IF" && counterIfs-- == 0) {
+                            var nameCopy: String = blocksList[j].name
+                            if (isVariableInString(blocksList[j].name)) {
                                 var pattern: Sequence<MatchResult> =
-                                    Regex("""([a-z]|[A-Z])[\w\d_]*""".trimIndent()).findAll(input = varBlocksList[j].name)
+                                    Regex("""([a-z]|[A-Z])[\w\d_]*""".trimIndent()).findAll(input = blocksList[j].name)
                                 pattern = pattern.sortedBy { -it.value.length }
                                 pattern.forEach {
                                     val number = convertVarToNum(it.value, variables)
@@ -268,10 +268,10 @@ class Run {
                                 var skip = 0
                                 var counter = 0
 
-                                for (k in i + 1 until varBlocksList.size) {
-                                    if (varBlocksList[k].blockType == "IF") {
+                                for (k in i + 1 until blocksList.size) {
+                                    if (blocksList[k].blockType == "IF") {
                                         counter++
-                                    } else if (varBlocksList[k].blockType == "END_IF" && counter-- == 0) {
+                                    } else if (blocksList[k].blockType == "END_IF" && counter-- == 0) {
                                         break
                                     } else {
                                         skip++
@@ -290,11 +290,11 @@ class Run {
                         return
                     } else {
                         for (j in i - 1 downTo stackForIf.last()) {
-                            if (varBlocksList[j].blockType == "VAR") {
-                                if (!varBeforeIf(varBlocksList, 0, stackForIf.last(), varBlocksList[j].name)) {
+                            if (blocksList[j].blockType == "VAR") {
+                                if (!varBeforeIf(blocksList, 0, stackForIf.last(), blocksList[j].name)) {
 
                                     for (k in 0 until variables.size) {
-                                        if (variables[k].name == varBlocksList[j].name) {
+                                        if (variables[k].name == blocksList[j].name) {
                                             variables.removeAt(k)
                                         }
                                     }
@@ -307,10 +307,10 @@ class Run {
                 "WHILE" -> {
                     counterWhile++
                     stackForWhile.add(i)
-                    var nameCopy: String = varBlocksList[i].name
-                    if (isVariableInString(varBlocksList[i].name)) {
+                    var nameCopy: String = blocksList[i].name
+                    if (isVariableInString(blocksList[i].name)) {
                         var pattern: Sequence<MatchResult> =
-                            Regex("""([a-z]|[A-Z])[\w\d_]*""".trimIndent()).findAll(input = varBlocksList[i].name)
+                            Regex("""([a-z]|[A-Z])[\w\d_]*""".trimIndent()).findAll(input = blocksList[i].name)
                         pattern = pattern.sortedBy { -it.value.length }
                         pattern.forEach {
                             val number = convertVarToNum(it.value, variables)
@@ -320,8 +320,8 @@ class Run {
                     val condition = InterpreterForInequalities(nameCopy)
                     if (!condition.interpretInequality()) {
                         var skip = 0
-                        for (j in i + 1 until varBlocksList.size) {
-                            if (varBlocksList[j].blockType != "END_WHILE") {
+                        for (j in i + 1 until blocksList.size) {
+                            if (blocksList[j].blockType != "END_WHILE") {
                                 skip++
                             } else {
                                 break
@@ -340,10 +340,10 @@ class Run {
                         return
                     } else {
 
-                        var nameCopy: String = varBlocksList[stackForWhile.last()].name
-                        if (isVariableInString(varBlocksList[stackForWhile.last()].name)) {
+                        var nameCopy: String = blocksList[stackForWhile.last()].name
+                        if (isVariableInString(blocksList[stackForWhile.last()].name)) {
                             var pattern: Sequence<MatchResult> =
-                                Regex("""([a-z]|[A-Z])[\w\d_]*""".trimIndent()).findAll(input = varBlocksList[stackForWhile.last()].name)
+                                Regex("""([a-z]|[A-Z])[\w\d_]*""".trimIndent()).findAll(input = blocksList[stackForWhile.last()].name)
                             pattern = pattern.sortedBy { -it.value.length }
                             pattern.forEach {
                                 val number = convertVarToNum(it.value, variables)

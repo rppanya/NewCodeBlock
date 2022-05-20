@@ -19,7 +19,7 @@
         android:layout_margin="5dp">
 
         <EditText
-            android:id="@+id/valueOfVariable"
+            android:id="@+id/value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -28,7 +28,7 @@
             android:visibility="gone" />
 
         <EditText
-            android:id="@+id/nameOfVariable"
+            android:id="@+id/name"
             android:layout_width="237dp"
             android:layout_height="50dp"
             android:layout_alignParentStart="true"
@@ -57,7 +57,7 @@
             android:background="@color/blockTypeColor">
 
             <TextView
-                android:id="@+id/nameOfBlock"
+                android:id="@+id/blockType"
                 android:layout_width="58dp"
                 android:layout_height="23dp"
                 android:layout_alignParentStart="true"

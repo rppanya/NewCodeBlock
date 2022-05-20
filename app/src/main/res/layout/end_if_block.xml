@@ -24,7 +24,7 @@
             android:background="@color/ifBlockColor">
 
             <TextView
-                android:id="@+id/nameOfBlock"
+                android:id="@+id/blockType"
                 android:layout_width="38dp"
                 android:layout_height="wrap_content"
                 android:text=""
@@ -34,7 +34,7 @@
                 tools:ignore="RelativeOverlap" />
 
             <EditText
-                android:id="@+id/nameOfVariable"
+                android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
@@ -44,7 +44,7 @@
                 tools:ignore="RelativeOverlap" />
 
             <EditText
-                android:id="@+id/valueOfVariable"
+                android:id="@+id/value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
