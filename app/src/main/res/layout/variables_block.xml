@@ -29,7 +29,7 @@
             android:layout_marginStart="211dp"
             android:layout_marginEnd="14dp"
             android:ems="10"
-            android:hint="Value"
+            android:hint="@string/value"
             android:inputType="textPersonName" />
 
         <EditText
@@ -43,7 +43,7 @@
             android:layout_marginStart="87dp"
             android:layout_marginEnd="138dp"
             android:ems="10"
-            android:hint="Name"
+            android:hint="@string/name"
             android:inputType="textPersonName"
             android:visibility="visible" />
 
@@ -70,7 +70,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
                 android:gravity="center"
-                android:text="VAR"
+                android:text="@string/var"
                 android:textSize="18sp"
                 android:textStyle="bold" />
         </RelativeLayout>

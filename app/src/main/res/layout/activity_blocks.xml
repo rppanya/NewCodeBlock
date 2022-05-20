@@ -16,54 +16,50 @@
         android:orientation="vertical"
         tools:layout_editor_absoluteX="-143dp"
         tools:layout_editor_absoluteY="-16dp">
+
         <TableLayout
-            android:id="@+id/ButtonsTable"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-        <TableRow
             android:layout_width="match_parent"
             android:layout_height="62dp"
-            android:background="@color/light_blue">
+            android:orientation="horizontal">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:background="@color/dark_blue">
 
-            <Button
-                android:id="@+id/backButton"
-                android:layout_width="60dp"
-                android:layout_height="50dp"
-                android:layout_gravity="left"
-                android:layout_marginHorizontal="8dp"
-                android:layout_marginTop="7dp"
-                android:background="@drawable/ic_baseline_arrow_back_ios_24" />
+                <Button
+                    android:id="@+id/backButton"
+                    android:layout_width="60dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="left"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_marginTop="7dp"
+                    android:background="@drawable/ic_baseline_arrow_back_ios_24"
+                    android:backgroundTint="@color/white"
+                    tools:ignore="SpeakableTextPresentCheck" />
 
-            <Button
-                android:id="@+id/consoleButton"
-                style="@style/custom_buttons"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:layout_marginTop="7dp"
-                android:layout_marginRight="15dp"
-                android:layout_gravity="right"
-                android:background="@color/dark_blue"
-                android:text="CONSOLE"
-                android:focusable="false"
-                app:layout_constraintStart_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/rcView"
-                app:layout_constraintTop_toBottomOf="@+id/menuButtonTop" />
+                <Button
+                    android:id="@+id/btnDebug"
+                    style="@style/custom_buttons"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentEnd="true"
+                    android:background="@drawable/play_24"
+                    android:gravity="bottom"
+                    app:layout_constraintStart_toEndOf="parent" />
 
-            <Button
-                android:id="@+id/btnDebug"
-                style="@style/custom_buttons"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginTop="7dp"
-                android:background="@color/dark_blue"
-                android:focusable="false"
-                android:text="DEBUG"
-                app:layout_constraintBottom_toTopOf="@+id/rcView"
-                app:layout_constraintTop_toBottomOf="@+id/menuButtonTop" />
-        </TableRow>
-    </TableLayout>
+                <Button
+                    android:id="@+id/consoleButton"
+                    style="@style/custom_buttons"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="80dp"
+                    android:text="@string/console"
+                    android:textSize="10sp"
+                    android:gravity="bottom"
+                    android:background="@drawable/ic_baseline_comment_24" />
+            </RelativeLayout>
+        </TableLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcView"
@@ -122,7 +118,7 @@
                 android:background="@drawable/text_menu_background"
                 android:elevation="2dp"
                 android:padding="3dp"
-                android:text="New variable"
+                android:text="@string/new_variable"
                 android:textAlignment="viewEnd"
                 android:textStyle="bold" />
 
@@ -134,7 +130,7 @@
                 android:background="@drawable/text_menu_background"
                 android:elevation="2dp"
                 android:padding="3dp"
-                android:text="While"
+                android:text="@string/_while"
                 android:textAlignment="viewEnd"
                 android:textStyle="bold" />
 
@@ -146,7 +142,7 @@
                 android:background="@drawable/text_menu_background"
                 android:elevation="2dp"
                 android:padding="3dp"
-                android:text="If"
+                android:text="@string/_if"
                 android:textAlignment="viewEnd"
                 android:textStyle="bold" />
 
@@ -158,7 +154,7 @@
                 android:background="@drawable/text_menu_background"
                 android:elevation="2dp"
                 android:padding="3dp"
-                android:text="If else"
+                android:text="@string/if_else"
                 android:textAlignment="viewEnd"
                 android:textStyle="bold" />
 
@@ -170,7 +166,7 @@
                 android:background="@drawable/text_menu_background"
                 android:elevation="2dp"
                 android:padding="3dp"
-                android:text="Print"
+                android:text="@string/print"
                 android:textAlignment="viewEnd"
                 android:textStyle="bold" />
 

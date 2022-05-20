@@ -11,6 +11,7 @@
         android:theme="@style/Theme.CodeBlock2" >
         <activity
             android:name=".MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.CodeBlock2"
             android:exported="true" >
             <intent-filter>
@@ -19,8 +20,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".BlocksActivity" />
-        <activity android:name=".InstructionsActivity" />
+        <activity android:name=".BlocksActivity" android:screenOrientation="portrait"
+            />
+        <activity android:name=".InstructionsActivity" android:screenOrientation="portrait" />
     </application>
 
 </manifest>

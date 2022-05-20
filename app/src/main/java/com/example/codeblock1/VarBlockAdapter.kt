@@ -69,7 +69,6 @@ class VarBlockAdapter : RecyclerView.Adapter<VarBlocksHolder>() { //private val 
     }
 
     override fun onBindViewHolder(holder: VarBlocksHolder, position: Int) {
-//        holder.bind(varBlocksList[position])
         holder.name.setText(varBlocksList[position].name)
         holder.value.setText(varBlocksList[position].value)
         holder.blockType.text = varBlocksList[position].blockType

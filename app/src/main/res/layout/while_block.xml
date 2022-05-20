@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Name"
+            android:text="@string/name"
             android:visibility="gone" />
 
         <EditText
@@ -38,7 +38,7 @@
             android:layout_marginStart="87dp"
             android:layout_marginEnd="35dp"
             android:ems="10"
-            android:hint="Condition"
+            android:hint="@string/condition"
             android:inputType="textPersonName"
             android:visibility="visible" />
 
@@ -65,7 +65,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
                 android:gravity="center"
-                android:text="WHILE"
+                android:text="@string/_WHILE"
                 android:textSize="18sp"
                 android:textStyle="bold" />
         </RelativeLayout>
@@ -85,7 +85,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
                 android:layout_marginVertical="7dp"
-                android:text="{"
+                android:text="@string/open_bracket"
                 android:textSize="25sp"
                 android:textStyle="bold" />
         </RelativeLayout>

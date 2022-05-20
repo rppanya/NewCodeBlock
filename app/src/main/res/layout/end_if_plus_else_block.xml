@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Name"
+            android:text="@string/name"
             android:visibility="gone" />
 
         <EditText
@@ -57,27 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="15dp"
                 android:layout_marginVertical="7dp"
-                android:text="}"
-                android:textSize="25sp"
-                android:textStyle="bold" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/bracket"
-            android:layout_width="38dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="0dp"
-            android:layout_toEndOf="@+id/nameOfVariable"
-            android:background="@color/blockTypeColor">
-
-            <TextView
-                android:id="@+id/bracketOpen"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="15dp"
-                android:layout_marginVertical="7dp"
-                android:text="{"
+                android:text="@string/close_bracket"
                 android:textSize="25sp"
                 android:textStyle="bold" />
         </RelativeLayout>
@@ -85,9 +65,28 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_centerHorizontal="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="302dp"
+            android:layout_toEndOf="@+id/nameOfVariable"
+            android:background="@color/blockTypeColor">
+
+            <TextView
+                android:id="@+id/bracket"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginVertical="7dp"
+                android:gravity="center"
+                android:text="@string/open_bracket"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginHorizontal="70dp"
-            android:layout_toStartOf="@+id/bracket"
+            android:layout_marginStart="0dp"
             android:layout_toEndOf="@+id/typeLayout"
             android:background="@color/blockTypeColor"
             android:gravity="center">
@@ -98,7 +97,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="15dp"
                 android:layout_marginVertical="7dp"
-                android:text="Else"
+                android:text="@string/_else"
                 android:textSize="18sp"
                 android:textStyle="bold" />
         </RelativeLayout>

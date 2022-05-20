@@ -25,4 +25,22 @@ WHILE : цикл while(пока)
 Для использования блока WHILE  необходимо ввести в поле CONDITION условие в формате стандартного условия с использованием  знаков >,,==,>=,=,!=. При записи условия также могут быть использованы арифметические операции как с числами, так и с переменными. ВНИМАНИЕ! В данном блоке в условии обязательно должна содержаться переменная. Добавление блока аналогично добавлению блока IF, правила поведения с закрывающей скобкой те же. ВНИМАНИЕ! Для корректной работы программы, а также для избежания нежелательных ошибок внутри блока WHILE обязательно должна изменяться переменная, используемая в условии данного блока WHILE, причем изменяться в сторону уменьшение интервала истинных значений условия в WHILE. Между блоками WHILE и } могут находиться любые блоки .
 
 </string>
+    <string name="console">console</string>
+    <string name="new_variable">New variable</string>
+    <string name="_while">While</string>
+    <string name="_if">If</string>
+    <string name="if_else">If else</string>
+    <string name="print">Print</string>
+    <string name="close_bracket">}</string>
+    <string name="open_bracket">{</string>
+    <string name="_else">Else</string>
+    <string name="condition">Condition</string>
+    <string name="IF">IF</string>
+    <string name="Console">Console</string>
+    <string name="output">Output</string>
+    <string name="name">Name</string>
+    <string name="PRINT">PRINT</string>
+    <string name="value">Value</string>
+    <string name="var">VAR</string>
+    <string name="_WHILE">WHILE</string>
 </resources>
