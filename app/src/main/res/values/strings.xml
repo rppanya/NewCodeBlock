@@ -29,7 +29,7 @@ To OVERRIDE an already existing variable, write the name of the variable that yo
 
 </string>
     <string name="console">console</string>
-    <string name="new_variable">New variable</string>
+    <string name="new_variable">Variable</string>
     <string name="_while">While</string>
     <string name="_if">If</string>
     <string name="if_else">If else</string>
@@ -46,4 +46,7 @@ To OVERRIDE an already existing variable, write the name of the variable that yo
     <string name="value">Value</string>
     <string name="var">VAR</string>
     <string name="_WHILE">WHILE</string>
+    <string name="exit">Exit</string>
+    <string name="instruction">Instruction</string>
+    <string name="begin">Begin</string>
 </resources>
