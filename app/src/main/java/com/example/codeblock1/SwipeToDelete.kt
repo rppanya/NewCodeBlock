@@ -1,4 +1,5 @@
 package com.example.codeblock1
+
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
@@ -12,7 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 
 
-abstract class SwipeToDelete(context: Context) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+abstract class SwipeToDelete(context: Context) :
+    ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
 
     private val deleteIcon = ContextCompat.getDrawable(context, R.drawable.ic_baseline_delete_24)
     private val intrinsicWidth = deleteIcon!!.intrinsicWidth
@@ -48,17 +50,28 @@ abstract class SwipeToDelete(context: Context) : ItemTouchHelper.SimpleCallback(
 
         val itemView = viewHolder.itemView
         val itemHeight = itemView.bottom - itemView.top
-        val isCanceled : Boolean = dX == 0f && !isCurrentlyActive
+        val isCanceled: Boolean = dX == 0f && !isCurrentlyActive
 
         if (isCanceled) {
-            clearCanvas(c, itemView.right + dX, itemView.top.toFloat(), itemView.right.toFloat(), itemView.bottom.toFloat())
+            clearCanvas(
+                c,
+                itemView.right + dX,
+                itemView.top.toFloat(),
+                itemView.right.toFloat(),
+                itemView.bottom.toFloat()
+            )
             super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
             return
         }
 
         // red background
         background.color = backgroundColor
-        background.setBounds(itemView.right + dX.toInt(), itemView.top, itemView.right, itemView.bottom)
+        background.setBounds(
+            itemView.right + dX.toInt(),
+            itemView.top,
+            itemView.right,
+            itemView.bottom
+        )
         background.draw(c)
 
         // icon on background position

@@ -12,6 +12,7 @@ class ReversePolishNotation(var dataString: String) {
             '%' -> st.add(l % r)
         }
     }
+
     private fun isOperator(c: Char): Boolean { // возвращаем тру если один из символов ниже
         return c == '+' || c == '-' || c == '*' || c == '/' || c == '%'
     }
@@ -43,7 +44,10 @@ class ReversePolishNotation(var dataString: String) {
                     i++
                 }
                 isOperator(current) -> {
-                    while (stackOperators.isNotEmpty() && priority(stackOperators.last()) >= priority(current)) {
+                    while (stackOperators.isNotEmpty() && priority(stackOperators.last()) >= priority(
+                            current
+                        )
+                    ) {
                         processOperator(stackNumbers, stackOperators.removeLast())
                     }
                     stackOperators.add(current)

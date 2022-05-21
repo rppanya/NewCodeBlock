@@ -1,4 +1,5 @@
 package com.example.codeblock1
+
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -21,8 +22,7 @@ class InstructionsActivity : Activity() {
         binding.btnTranslate.setOnClickListener {
             if (binding.textInstruction.text == getText(R.string.rus_instructions)) {
                 binding.textInstruction.text = getText(R.string.eng_instructions)
-            }
-            else {
+            } else {
                 binding.textInstruction.text = getText(R.string.rus_instructions)
             }
         }

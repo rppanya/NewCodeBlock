@@ -8,15 +8,16 @@ class InterpreterForInequalities(var dataString: String) {
     var inequalitySign = ""
     private fun booleanValue(sign: String, firstValue: Int, secondValue: Int): Boolean {
         return when (sign) {
-            ">" -> firstValue>secondValue
-            "<" -> firstValue<secondValue
-            "==" -> firstValue==secondValue
-            "!=" -> firstValue!=secondValue
-            ">=" -> firstValue>=secondValue
-            "<=" -> firstValue<=secondValue
+            ">" -> firstValue > secondValue
+            "<" -> firstValue < secondValue
+            "==" -> firstValue == secondValue
+            "!=" -> firstValue != secondValue
+            ">=" -> firstValue >= secondValue
+            "<=" -> firstValue <= secondValue
             else -> false
         }
     }
+
     private fun isInequalitySign(c: Char): Boolean { // возвращаем тру если один из символов ниже
         return c == '>' || c == '<' || c == '=' || c == '!'
     }
@@ -26,7 +27,7 @@ class InterpreterForInequalities(var dataString: String) {
 
         var flag = false
         for (i in dataString.indices) {
-            if ( isInequalitySign(dataString[i]) ) {
+            if (isInequalitySign(dataString[i])) {
                 flag = true
                 inequalitySign += dataString[i]
             } else if (!flag) {

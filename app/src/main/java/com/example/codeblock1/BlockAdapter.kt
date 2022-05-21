@@ -14,18 +14,26 @@ import com.example.codeblock1.BlockAdapter.BlocksHolder
 import java.util.*
 import kotlin.collections.ArrayList
 
-class BlockAdapter : RecyclerView.Adapter<BlocksHolder>() { //private val testVal: test в конструктор
+class BlockAdapter :
+    RecyclerView.Adapter<BlocksHolder>() { //private val testVal: test в конструктор
 
     val blocksList = ArrayList<Block>()
 
-    inner class BlocksHolder(item: View):RecyclerView.ViewHolder(item){
-        val blockType : TextView = item.findViewById(R.id.blockType)
-        val value : EditText = item.findViewById(R.id.value)
-        val name : EditText = item.findViewById(R.id.name)
+    inner class BlocksHolder(item: View) : RecyclerView.ViewHolder(item) {
+        val blockType: TextView = item.findViewById(R.id.blockType)
+        val value: EditText = item.findViewById(R.id.value)
+        val name: EditText = item.findViewById(R.id.name)
 
         init {
             name.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+                override fun beforeTextChanged(
+                    s: CharSequence,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+
                 @SuppressLint("SetTextI18n")
                 override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                     blocksList[adapterPosition].name = s.toString()
@@ -35,7 +43,14 @@ class BlockAdapter : RecyclerView.Adapter<BlocksHolder>() { //private val testVa
             })
 
             value.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+                override fun beforeTextChanged(
+                    s: CharSequence,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+
                 @SuppressLint("SetTextI18n")
                 override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                     blocksList[adapterPosition].value = s.toString()
@@ -48,7 +63,7 @@ class BlockAdapter : RecyclerView.Adapter<BlocksHolder>() { //private val testVa
     }
 
     override fun getItemViewType(position: Int): Int {
-        val viewType = when(blocksList[position].blockType){
+        val viewType = when (blocksList[position].blockType) {
             "PRINT" -> R.layout.print_block
             "IF" -> R.layout.if_block
             "END_IF" -> R.layout.end_if_block
@@ -63,6 +78,7 @@ class BlockAdapter : RecyclerView.Adapter<BlocksHolder>() { //private val testVa
     override fun getItemId(position: Int): Long {
         return position.toLong()
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BlocksHolder {
         val view = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
         return BlocksHolder(view)
@@ -75,16 +91,16 @@ class BlockAdapter : RecyclerView.Adapter<BlocksHolder>() { //private val testVa
     }
 
 
-    fun removeBlock(position: Int){
+    fun removeBlock(position: Int) {
         if (blocksList[position].blockType == "IF") {
             var counter = 0
-            for (i in position+1 until blocksList.size) {
+            for (i in position + 1 until blocksList.size) {
                 if (blocksList[i].blockType == "IF") {
                     counter++
                 } else if ((blocksList[i].blockType == "END_IF") && counter-- == 0) {
                     var elseIndex = -1
                     counter = 0
-                    for (j in position+1 until i) {
+                    for (j in position + 1 until i) {
                         if (blocksList[j].blockType == "IF") {
                             counter++
                         }
@@ -94,7 +110,7 @@ class BlockAdapter : RecyclerView.Adapter<BlocksHolder>() { //private val testVa
                             break
                         }
                     }
-                    if (elseIndex!=-1) {
+                    if (elseIndex != -1) {
                         blocksList.removeAt(elseIndex)
                         blocksList.removeAt(position)
                         blocksList.removeAt(i - 2)
@@ -104,22 +120,22 @@ class BlockAdapter : RecyclerView.Adapter<BlocksHolder>() { //private val testVa
                         break
                     } else {
                         blocksList.removeAt(position)
-                        blocksList.removeAt(i-1)
+                        blocksList.removeAt(i - 1)
                         notifyItemRemoved(position)
-                        notifyItemRemoved(i-1)
+                        notifyItemRemoved(i - 1)
                         break
                     }
                 }
             }
         } else if (blocksList[position].blockType == "END_IF") {
             var counter = 0
-            for (i in position-1 downTo 0) {
-                if (blocksList[i].blockType == "END_IF" ) {
+            for (i in position - 1 downTo 0) {
+                if (blocksList[i].blockType == "END_IF") {
                     counter++
                 } else if (blocksList[i].blockType == "IF" && counter-- == 0) {
                     var elseIndex = -1
                     counter = 0
-                    for (j in position-1 downTo i+1) {
+                    for (j in position - 1 downTo i + 1) {
                         if (blocksList[j].blockType == "END_IF") {
                             counter++
                         }
@@ -129,7 +145,7 @@ class BlockAdapter : RecyclerView.Adapter<BlocksHolder>() { //private val testVa
                             break
                         }
                     }
-                    if (elseIndex!=-1) {
+                    if (elseIndex != -1) {
                         blocksList.removeAt(elseIndex)
                         blocksList.removeAt(i)
                         blocksList.removeAt(position - 2)
@@ -139,9 +155,9 @@ class BlockAdapter : RecyclerView.Adapter<BlocksHolder>() { //private val testVa
                         break
                     } else {
                         blocksList.removeAt(i)
-                        blocksList.removeAt(position-1)
+                        blocksList.removeAt(position - 1)
                         notifyItemRemoved(i)
-                        notifyItemRemoved(position-1)
+                        notifyItemRemoved(position - 1)
                         break
                     }
 
@@ -149,27 +165,27 @@ class BlockAdapter : RecyclerView.Adapter<BlocksHolder>() { //private val testVa
             }
         } else if (blocksList[position].blockType == "WHILE") {
             var counter = 0
-            for (i in position+1 until blocksList.size) {
+            for (i in position + 1 until blocksList.size) {
                 if (blocksList[i].blockType == "WHILE") {
                     counter++
                 } else if (blocksList[i].blockType == "END_WHILE" && counter-- == 0) {
                     blocksList.removeAt(position)
-                    blocksList.removeAt(i-1)
+                    blocksList.removeAt(i - 1)
                     notifyItemRemoved(position)
-                    notifyItemRemoved(i-1)
+                    notifyItemRemoved(i - 1)
                     break
                 }
             }
         } else if (blocksList[position].blockType == "END_WHILE") {
             var counter = 0
-            for (i in position-1 downTo 0) {
+            for (i in position - 1 downTo 0) {
                 if (blocksList[i].blockType == "END_WHILE") {
                     counter++
                 } else if (blocksList[i].blockType == "WHILE" && counter-- == 0) {
                     blocksList.removeAt(i)
-                    blocksList.removeAt(position-1)
+                    blocksList.removeAt(position - 1)
                     notifyItemRemoved(i)
-                    notifyItemRemoved(position-1)
+                    notifyItemRemoved(position - 1)
                     break
                 }
             }
@@ -179,7 +195,7 @@ class BlockAdapter : RecyclerView.Adapter<BlocksHolder>() { //private val testVa
         }
     }
 
-    fun addVarBlock(block: Block){
+    fun addVarBlock(block: Block) {
         blocksList.add(block)
         notifyItemInserted(blocksList.size)
     }
@@ -188,7 +204,7 @@ class BlockAdapter : RecyclerView.Adapter<BlocksHolder>() { //private val testVa
         return blocksList.size
     }
 
-    fun callVarBlocksList(): ArrayList<Block>{
+    fun callVarBlocksList(): ArrayList<Block> {
         return blocksList
     }
 
@@ -196,22 +212,23 @@ class BlockAdapter : RecyclerView.Adapter<BlocksHolder>() { //private val testVa
         return variables
     }*/
 
-    var simpleCellback = object : ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP.or(ItemTouchHelper.DOWN),0) {
-        override fun onMove(
-            recyclerView: RecyclerView,
-            viewHolder: RecyclerView.ViewHolder,
-            target: RecyclerView.ViewHolder
-        ): Boolean {
-            val startPosition = viewHolder.adapterPosition
-            val endPosition = target.adapterPosition
+    var simpleCellback =
+        object : ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP.or(ItemTouchHelper.DOWN), 0) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                val startPosition = viewHolder.adapterPosition
+                val endPosition = target.adapterPosition
 
-            Collections.swap(blocksList, startPosition, endPosition)
-            recyclerView.adapter?.notifyItemMoved(startPosition, endPosition)
-            return true
+                Collections.swap(blocksList, startPosition, endPosition)
+                recyclerView.adapter?.notifyItemMoved(startPosition, endPosition)
+                return true
+            }
+
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {}
+
         }
-
-
-        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {}
-
-    }
 }
