@@ -78,6 +78,7 @@ class Run {
                     if(incorrectSigns.containsMatchIn(block.value)){
                         return "Incorrect arithmetic expression: ${block.value}"
                     }
+
                 }
 
                 "PRINT"->{
@@ -242,7 +243,7 @@ class Run {
                         for (j in i + 1 until blocksList.size) {
                             if (blocksList[j].blockType == "IF") {
                                 counter++
-                            } else if (blocksList[j].blockType == "ELSE" || blocksList[j].blockType == "END_IF" && counter-- == 0) {
+                            } else if (blocksList[j].blockType == "END_IF" && counter-- == 0) {
                                 break
                             } else {
                                 skip++
