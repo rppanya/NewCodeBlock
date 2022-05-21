@@ -12,7 +12,7 @@ class ReversePolishNotation(var dataString: String) {
             '%' -> st.add(l % r)
         }
     }
-    private fun isOperator(c: Char): Boolean { // возвращяем тру если один из символов ниже
+    private fun isOperator(c: Char): Boolean { // возвращаем тру если один из символов ниже
         return c == '+' || c == '-' || c == '*' || c == '/' || c == '%'
     }
 
