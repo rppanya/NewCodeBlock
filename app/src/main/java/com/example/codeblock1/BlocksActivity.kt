@@ -105,7 +105,7 @@ class BlocksActivity : Activity() {
             }
 
         }
-        binding.backButton.setOnClickListener{
+        binding.backButton.setOnClickListener {
             val current = Intent(this@BlocksActivity, MainActivity::class.java)
             startActivity(current)
         }
@@ -113,13 +113,13 @@ class BlocksActivity : Activity() {
     }
 
     private fun init(context: Context) {
-        binding.apply{
+        binding.apply {
             rcView.layoutManager = LinearLayoutManager(this@BlocksActivity)
             rcView.adapter = adapter
             val itemTouchHelper = ItemTouchHelper(adapter.simpleCellback)
             itemTouchHelper.attachToRecyclerView(rcView)
 
-            val swipeHandler = object: SwipeToDelete(context) {
+            val swipeHandler = object : SwipeToDelete(context) {
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                     val swipeAdapter = rcView.adapter as BlockAdapter
                     swipeAdapter.removeBlock(viewHolder.adapterPosition)
@@ -128,25 +128,25 @@ class BlocksActivity : Activity() {
             val itemTouchHelperSwipe = ItemTouchHelper(swipeHandler)
             itemTouchHelperSwipe.attachToRecyclerView(rcView)
 
-            binding.btnVariables.setOnClickListener{
+            binding.btnVariables.setOnClickListener {
                 val block = Block("", "", "VAR")
                 adapter.addVarBlock(block)
 
             }
 
-            binding.btnPrint.setOnClickListener{
+            binding.btnPrint.setOnClickListener {
                 val block = Block("", "", "PRINT")
                 adapter.addVarBlock(block)
             }
 
-            binding.btnIf.setOnClickListener{
+            binding.btnIf.setOnClickListener {
                 var block = Block("", "", "IF")
                 adapter.addVarBlock(block)
                 block = Block("", "", "END_IF")
                 adapter.addVarBlock(block)
             }
 
-            binding.btnIfElse.setOnClickListener{
+            binding.btnIfElse.setOnClickListener {
                 var block = Block("", "", "IF")
                 adapter.addVarBlock(block)
                 block = Block("", "", "ELSE")
@@ -155,7 +155,7 @@ class BlocksActivity : Activity() {
                 adapter.addVarBlock(block)
             }
 
-            binding.btnWhile.setOnClickListener{
+            binding.btnWhile.setOnClickListener {
                 var block = Block("", "", "WHILE")
                 adapter.addVarBlock(block)
                 block = Block("", "", "END_WHILE")

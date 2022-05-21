@@ -41,8 +41,8 @@ class Run {
                         nameCopy = nameCopy.replace(it.value, number)
                     }
                     val exception = ReversePolishNotation(nameCopy)
-                    //Log.d("arrr", exception.RPN())
                     return exception.RPN()
+
                 }
                 return block.value
             }
@@ -57,6 +57,8 @@ class Run {
 
     private fun isDebugValid(blocksList: ArrayList<Block>): String{
         blocksList.forEach { block ->
+            block.name = block.name.replace("\\s".toRegex(), "")
+            block.value = block.value.replace("\\s".toRegex(), "")
             when(block.blockType){
                 "VAR"->{
                     //name field
@@ -167,6 +169,8 @@ class Run {
         console.consoleOutput.text = ""
         var i = 0
         while(i < blocksList.size) {
+            blocksList[i].name = blocksList[i].name.replace("\\s".toRegex(), "")
+            blocksList[i].value = blocksList[i].value.replace("\\s".toRegex(), "")
             when (blocksList[i].blockType) {
                 "VAR" -> {
                     val nameCopy: String = blocksList[i].name
