@@ -17,7 +17,7 @@ class InterpreterForInequalities(var dataString: String) {
             else -> false
         }
     }
-    private fun isInequalitySign(c: Char): Boolean { // возвращяем тру если один из символов ниже
+    private fun isInequalitySign(c: Char): Boolean { // возвращаем тру если один из символов ниже
         return c == '>' || c == '<' || c == '=' || c == '!'
     }
 
